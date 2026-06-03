@@ -1,0 +1,18 @@
+# Denylist для export-lirai.sh → временная папка перед push (синтаксис как .gitignore).
+
+config.json
+.env
+todo.md
+lira.desktop
+video-engine/
+
+tuning/**
+!tuning/README.md
+
+# Всё runtime под data/, кроме шаблона, UI-иконок, icon.png, limbic из git
+data/**
+!data/icon.png
+!data/personas/_template/**
+!data/icons/**
+!data/downloads/.gitkeep
+!data/models/gemma-4-26b/limbic/**

@@ -1,0 +1,136 @@
+key,en
+tools.memory_search.description,"SEARCH LONG-TERM MEMORY (chat history, saved facts). Call ONLY when the user asks about prior dialogue or stored facts; otherwise answer without this tool. Text only (not photos/gallery). Do not copy parameter descriptions or filler text into query. No two memory_search calls in a row: one memory query per chain step, then answer in plain text."
+tools.memory_search.param.query,Short memory lookup topic (2-10 words, your own wording).
+tools.gallery_search.description,"SEARCH THE LOCAL GALLERY of saved generations (images on disk + descriptions in DB). Server runs the call only if the user's current message explicitly asks for pictures, photos, gallery, visuals, or saved art (tool_policies.json → user_intent.gallery_message_substrings); otherwise the call is rejected. Search is mainly semantic (vector on description), then substring in description or prompt. Pass query as-is (phrase in the user's language). NOT for time, date, weather, or hardware from sens — reply in text. NOT for webcam snapshot — use camera_capture. Addressing the assistant by name alone is not a reason to search the gallery. One gallery_search per reply; only as the first tool in the chain. Found frames: thumbnails in chat; brief vision pass on best matches."
+tools.gallery_search.param.query,"Search query: scene, objects, mood, style (short phrase or a few words). Focus on visual content, not the assistant's name or filler words."
+tools.camera_capture.description,WEBCAM SNAPSHOT: one frame from the device camera for a vision reply. Server runs the call only if the user's message explicitly requests camera/webcam (tool_policies.json → user_intent.camera_message_substrings); otherwise rejected. User is prompted for permission first (can be remembered for this chat). NOT for saved gallery art — use gallery_search. NOT for time/hardware from sens. One camera_capture per reply; only as the first tool in the chain. Requires a vision model (mmproj/chat_handler).
+tools.camera_capture.param.reason,Brief reason for the capture (optional log).
+tools.web_search.description,"INTERNET SEARCH (SearXNG). Server runs the call only if the user's message explicitly requests data from the web (tool_policies.json → user_intent.web_message_substrings); otherwise rejected — answer from sens, memory, and knowledge. Not for time/hardware from sens. Returns titles, links, snippets; for page facts call web_fetch_url on a URL from results. To repeat the same SERP use web_search_saved with the same research_run_id, not another web_search. Do not call web_fetch_url twice for one URL — read prior tool messages."
+tools.web_search.param.query,Web search query.
+tools.web_search.param.limit,How many results (1..10).
+tools.web_search.param.language,"Search language, e.g. ru or en."
+tools.web_search.param.route_mode,Search route: auto/default/ru.
+tools.web_search_saved.description,"Re-print titles, URLs and snippets from a completed web_search by research_run_id — no new internet search. For another link from the same SERP after fetch, instead of a second web_search with the same meaning."
+tools.web_search_saved.param.run_id,research_run_id from web_search response (number in «research_run_id=…»).
+tools.web_fetch_url.description,"FETCH PAGE by URL (HTTP) continuing web_search in the same reply. Without a prior web_search in this reply do not call — server will reject. End of tool output lists other URLs from the same SERP not fetched yet. Use when you need the full article, not only a SERP snippet. Do not dump raw JSON to the user. One URL — one successful fetch per reply."
+tools.web_fetch_url.param.url,Full page URL to read.
+tools.web_fetch_url.param.run_id,Research run id from web_search (optional).
+tools.web_fetch_url.param.route_mode,Fetch route: auto/default/ru.
+policies.system.internet.text,"INTERNET (web_search, web_fetch_url): sens and memory come first. A new web_search runs only if the user's current message explicitly requests web data (see user_intent.web_message_substrings in tool_policies.json); otherwise answer from context and knowledge. web_fetch_url only after an allowed web_search in the same reply, on a URL from its results."
+policies.tools.memory_search.forbidden_if_last_hint,"Memory was already queried this step — answer from the result; web_search only if the user explicitly asked for internet search in this message (server will check). Otherwise reply in text, not memory_search again."
+policies.tools.memory_search.extras.gallery_redirect_refusal_message,"memory_search is for text chat history and saved facts only, not for pictures. Call gallery_search with a visual query (scene, people, style) in the user's language — without adding «images» to the query. If gallery_search is rejected, reply in text."
+policies.tools.gallery_search.extras.no_gallery_intent_refusal_message,"gallery_search is unavailable: the user's message has no explicit request for pictures, photos, gallery, or saved art. Reply in text; time and hardware readings — only from sens."
+policies.tools.gallery_search.extras.suppress_refusal_message,"gallery_search is not run: web tools were already used for this user message (facts from sites). Do not mix gallery with dealers/prices — continue web_fetch_url on other URLs from the SERP or web_search_saved, or reply in text."
+policies.tools.camera_capture.extras.no_camera_intent_refusal_message,camera_capture is unavailable: the user's message has no explicit request to take a webcam photo. Reply in text; time and hardware — only from sens.
+policies.tools.camera_capture.extras.suppress_refusal_message,camera_capture is not run: web tools were already used for this message. Do not mix camera with site facts — continue web_fetch_url or reply in text.
+policies.tools.web_search.forbidden_if_last_hint,Open pages via web_fetch_url on URLs from the results or web_search_saved with the same research_run_id.
+policies.tools.web_search.extras.no_web_intent_refusal_message,"web_search is unavailable: the user's message has no explicit request for internet search or up-to-date web data. Answer from sens, memory, and your knowledge; if the web is required, ask the user to phrase an explicit internet search request."
+policies.tools.web_fetch_url.extras.orphan_refusal_message,web_fetch_url is unavailable: open pages only after web_search in this same reply (on a URL from its results). Call web_search first.
+chat.tool_history_trunc_marker,[… tool output truncated for context length …]
+tools.memory_search.no_hit,No relevant results in memory.
+tools.memory_search.context_header,[CONTEXT FROM MEMORY]:
+tools.memory_search.fact_line,Fact: {reply}
+tools.memory_search.error,Memory access error: {e}
+tools.memory_search.skipped_empty,[memory_search skipped: empty query]
+tools.memory_search.skipped_irrelevant,[memory_search skipped: the question does not explicitly reference prior dialogue or stored facts]
+tools.web_search.empty_query,Query is empty.
+tools.web_search.no_window,Error: no window context to start web-search service.
+tools.web_search.unavailable,Web search unavailable: {details}
+tools.web_search.error,web_search error: {e}
+tools.web_search.error_prefix,web_search error
+tools.web_search.no_results,No results for this query.
+tools.web_search.no_title,(no title)
+tools.web_search.result_line,"{i}. {title}
+URL: {link}
+Snippet: {snippet}
+RouteHint(for fetch): {route_hint}"
+tools.web_search.header,"web_search results (route={route_mode}, research_run_id={run_id}). Pass the same run_id to web_fetch_url if needed.
+
+"
+tools.web_search.skipped_empty,[web_search skipped: empty query]
+tools.web_search_saved.no_window,Error: no window context.
+tools.web_search_saved.bad_run_id,Invalid research_run_id.
+tools.web_search_saved.not_found,research_run_id={rid} not found or not in this session. Call web_search first or check the run number from its response.
+tools.web_search_saved.empty,No saved web_search positions for research_run_id={rid} (SERP may have been empty).
+tools.web_search_saved.line,"{i}. {title}
+URL: {u}
+Snippet: {sn}"
+tools.web_search_saved.header,"Saved web_search from DB (research_run_id={rid}), no new internet search:
+
+"
+tools.web_search_saved.footer,"Next, call web_fetch_url with url=... and run_id={rid} if needed."
+tools.web_search_saved.skipped,[web_search_saved skipped: provide integer run_id from web_search response]
+tools.web_fetch.empty_url,Empty URL.
+tools.web_fetch.no_window,Error: no window context.
+tools.web_fetch.error,web_fetch_url error: {e}
+tools.web_fetch.error_prefix,web_fetch_url error
+tools.web_fetch.serp_line,"- {title}
+  {url}
+  Snippet: {sn}"
+tools.web_fetch.serp_tail,"
+
+--- From the same saved web_search (research_run_id={run_id}), not yet opened via web_fetch_url ---
+"
+tools.web_fetch.serp_done,(No other URLs from this SERP left to try — run a new web_search if the query changed.)
+tools.web_fetch.loaded,"Page content loaded (route={route}, chars={n}).
+URL: {url}
+Summary:
+{short}"
+tools.web_fetch.skipped_empty,[web_fetch_url skipped: empty url]
+tools.web_fetch.dedupe,Repeat fetch skipped: this URL was already fetched in this reply ({url}). Do not call web_fetch_url again — use text from the prior tool message.
+tools.camera_capture.no_window,No application window.
+tools.recall_knowledge.skipped_visual,Text memory search skipped because a visual query was detected.
+chat.tool_refusal.chain_step,{fn_name} unavailable: server allows this tool only on chain step(s) {steps} (current step {step}). Continue with tools from the current menu or reply in text.
+chat.tool_refusal.after_last,{fn_name} unavailable right after «{last}»: this call order is forbidden.{hint} Use tools from the menu on this step or reply in text.
+chat.tool_not_found,Error: tool {name} not found.
+chat.gallery_search.frame_line,Frame #{i}: {cap}
+chat.gallery_search.vision_context,"ORIGINAL USER QUESTION (prioritize it; gallery only if it truly helps):
+{question}
+
+Gallery results for tool query «{query}» (in vision: {vision_n} of {total_n} frames{batch_note}).
+FRAME PROMPTS:
+{prompts}
+Frames are also shown to the user in a grid. YOUR TASK: reply as {model_name}, briefly and to the point — comment on what you see.
+"
+chat.gallery_search.meta,"
+
+[gallery_search] Tool query: {query!r}. Frames in results: {total} (sent to vision: {vision_n}).
+Frame prompts:
+{prompts}"
+chat.gallery_search.found,[gallery_search] Frames found.
+chat.gallery_search.empty,[gallery_search] Nothing found in gallery for this query.
+chat.gallery_search.default_query,search
+chat.camera_capture.vision_context,"ORIGINAL USER QUESTION:
+{question}
+
+This is one fresh frame from the user's webcam (camera_capture). The frame is shown in chat. YOUR TASK: reply as {model_name}, briefly — what you see and answer the question.
+"
+chat.camera_capture.meta_path,"
+
+[camera_capture] Frame: {path}"
+chat.camera_capture.meta_reason, Call reason: {reason!r}.
+chat.camera_capture.received,[camera_capture] Frame received.
+chat.camera_capture.denied,[camera_capture] User denied camera access. Reply in text or suggest attaching a photo manually.
+chat.camera_capture.cancelled,[camera_capture] Capture cancelled by user.
+chat.camera_capture.unavailable,[camera_capture] Camera unavailable: {msg}.
+chat.camera_capture.failed,[camera_capture] Could not capture frame: {msg}.
+chat.camera_capture.no_vision,camera_capture unavailable: active model has no vision (mmproj/chat_handler). Reply in text or ask the user to attach a photo.
+chat.camera_capture.user_cancelled,User cancelled camera capture
+chat.camera_capture.empty_frame,Empty camera frame
+chat.camera_capture.save_failed,Could not save frame
+chat.camera_capture.no_device,no device
+chat.camera_capture.error_generic,error
+chat.vision.images_no_vision,"[Images received, vision unavailable]"
+chat.vision.frames_comment_failed,[Frames received; brief vision comment failed — see log]
+chat.vision.batch_note,"(Vision batch {bi}/{n_batches}, frames {start}–{end} of {total}; comment only on these frames.)"
+chat.domain.tool_pending,[Running tool call…]
+chat.worker.empty_model_reply,Empty model reply — try rephrasing or a shorter question.
+chat.worker.gallery_searching,[Running tool call…]
+chat.worker.gallery_shown,[System: You showed gallery images to the user]
+chat.worker.model_error,Model error: {e}
+chat.worker.parse_error,Parse error: {e}
+chat.worker.telegram_notice,Noticed a Telegram message — replying without tools.
+notify_andrey.description,Record decision after a Telegram bot exchange. Call ONCE per evaluation. should_notify_andrey=true ONLY if the «Asked» line explicitly asks to pass something to the owner. should_notify_andrey=false otherwise. Do not use message to explain refusal.
+notify_andrey.param.should_notify,true — interrupt {user_name} in desktop {app_name} chat; false — stay silent in desktop (bot reply already sent).
+notify_andrey.param.message,"Only when should_notify_andrey=true: what to tell the owner, 1–2 sentences. Format: «In Telegram user_id=… asks to pass: …». Leave empty when false."
+notify_andrey.examples,Examples in tool schema docs.

@@ -1,0 +1,68 @@
+# --- Nested engine kept locally ---
+video-engine/
+
+# --- Python caches/build ---
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+build/
+dist/
+*.egg-info/
+
+# --- Virtual environments ---
+venv/
+.venv/
+env/
+
+# --- Local config (не в public export / git) ---
+config.json
+.env
+
+# --- IDE/editor ---
+.idea/
+.vscode/
+
+# --- OS/log ---
+*.log
+*.lock
+tmp/
+logs/
+
+# --- Local runtime artifacts ---
+Journal.txt
+identifier.sqlite
+test_gen.png
+train.txt
+unsloth_compiled_cache/
+
+# --- App runtime data (heavy/local only) ---
+data/db/
+data/media/
+data/memory/
+data/models/*
+!data/models/gemma-4-26b/
+data/models/gemma-4-26b/*
+!data/models/gemma-4-26b/limbic/
+!data/models/gemma-4-26b/limbic/**
+data/gallery.db
+data/wan.json
+data/downloads/*
+!data/downloads/.gitkeep
+
+# Автогенерируемые персоны (локально); шаблон — в git
+data/personas/*
+!data/personas/_template/
+!data/personas/_template/**
+.env
+
+# --- Tuning: кэш и промежуточные чанки ---
+tuning/generated/
+tuning/.expand_cache.json
+tuning/pod_transfer/
+tuning/*.b64
+tuning/fixtures/

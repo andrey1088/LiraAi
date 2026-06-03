@@ -1,0 +1,61 @@
+{
+  "version": 1,
+  "chain_limits": {
+    "max_tool_chain_steps": 10,
+    "max_web_fetch_success_per_turn": 3,
+    "disable_tools_after_web_fetch_dedupe_streak": 2
+  },
+  "system_policy_appends": [
+    {
+      "id": "internet",
+      "text": "INTERNET (web_search, web_fetch_url): sens and memory come first. A new web_search runs only if the user's current message explicitly requests web data (see user_intent.web_message_substrings in tool_policies.json); otherwise answer from context and knowledge. web_fetch_url only after an allowed web_search in the same reply, on a URL from its results."
+    }
+  ],
+  "user_intent": {},
+  "tools": {
+    "memory_search": {
+      "followup_tools": ["web_search"],
+      "forbidden_if_last_tool": ["memory_search"],
+      "forbidden_if_last_hint": "Memory was already queried on this step — answer from the result; web_search only if the user explicitly asked for web search in this message (server will verify). Otherwise reply in text, not memory_search again."
+    },
+    "gallery_search": {
+      "followup_tools": [],
+      "only_at_chain_steps": [1],
+      "extras": {
+        "requires_user_gallery_intent": true,
+        "no_gallery_intent_refusal_message": "gallery_search is unavailable: the user's message has no explicit request for pictures, photos, gallery, or saved art. Reply in text; time and hardware readings come only from sens.",
+        "suppress_if_web_without_user_gallery_intent": true,
+        "suppress_refusal_message": "gallery_search is not run: web tools were already used for this user message (facts from sites). Do not mix gallery with dealers/prices — continue web_fetch_url on other URLs from the SERP, web_search_saved, or reply in text."
+      }
+    },
+    "camera_capture": {
+      "followup_tools": [],
+      "only_at_chain_steps": [1],
+      "extras": {
+        "requires_user_camera_intent": true,
+        "no_camera_intent_refusal_message": "camera_capture is unavailable: the user's message has no explicit request to take a camera or webcam shot. Reply in text; time and hardware readings come only from sens.",
+        "suppress_if_web_without_user_camera_intent": true,
+        "suppress_refusal_message": "camera_capture is not run: web tools were already used for this user message. Do not mix camera with site facts — continue web_fetch_url or reply in text."
+      }
+    },
+    "web_search": {
+      "followup_tools": ["web_fetch_url", "web_search_saved"],
+      "forbidden_if_last_tool": ["web_search"],
+      "forbidden_if_last_hint": "Open pages via web_fetch_url using URLs from the SERP or web_search_saved with the same research_run_id.",
+      "extras": {
+        "requires_user_web_intent": true,
+        "no_web_intent_refusal_message": "web_search is unavailable: the user's message has no explicit request for internet search or up-to-date web data. Answer from sens, memory, and your knowledge; if the web is required, ask the user to phrase an explicit internet search request."
+      }
+    },
+    "web_search_saved": {
+      "followup_tools": ["web_fetch_url", "web_search_saved"]
+    },
+    "web_fetch_url": {
+      "followup_tools": ["web_fetch_url", "web_search_saved"],
+      "extras": {
+        "requires_web_research_touched_this_turn": true,
+        "orphan_refusal_message": "web_fetch_url is unavailable: open pages only after web_search in this same reply (using URLs from its results). Call web_search first."
+      }
+    }
+  }
+}

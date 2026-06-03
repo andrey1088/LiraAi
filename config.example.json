@@ -1,0 +1,108 @@
+{
+    "active_model": "Lira",
+    "active_model_id": "1",
+    "ui_locale": "ru",
+    "app": {
+        "product_name": "Lira"
+    },
+    "user": {
+        "display_name": "User",
+        "display_name_genitive": "User",
+        "display_name_dative": "User",
+        "display_name_instrumental": "User"
+    },
+    "models": [
+        {
+            "id": "1",
+            "name": "Lira",
+            "model_type": "Gemma-4-26B",
+            "model_path": "data/models/gemma-4-26b/model.gguf",
+            "clip_model_path": "data/models/gemma-4-26b/mmproj.gguf",
+            "template_path": "data/models/gemma-4-26b/chat_template.jinja",
+            "limbic_images_path": "data/models/gemma-4-26b/limbic",
+            "icon_path": "data/icons/lira.png",
+            "voice": "kseniya",
+            "chat_format": "gemma-4-it",
+            "perception_daemon": true,
+            "settings": {
+                "temperature": 1.1,
+                "top_p": 0.9,
+                "max_tokens": 2048,
+                "volume": 0.6,
+                "n_ctx": 8192,
+                "n_gpu_layers": -1,
+                "context_budget_tokens": 5632,
+                "context_reserve_tokens": 2176,
+                "context_generation_slack": 128,
+                "context_template_slack_tokens": 384,
+                "context_tail_keep_messages": 10,
+                "summary_max_tokens": 240
+            }
+        },
+        {
+            "id": "2",
+            "name": "Artist",
+            "model_class": "text-to-image",
+            "model_type": "example-sd-checkpoint",
+            "model_path": "data/models/example-sd/model.safetensors",
+            "lora_path": "data/models/lora/",
+            "icon_path": "data/icons/lira.png",
+            "settings": {
+                "steps": 30,
+                "cfg_scale": 7.0,
+                "clipSkip": 2,
+                "width": 512,
+                "height": 512,
+                "negative_prompt": "lowres, worst quality, low quality, bad anatomy, blurry",
+                "positive_prefix": "masterpiece, best quality"
+            }
+        },
+        {
+            "id": "3",
+            "name": "Image Edit",
+            "model_class": "image-edit",
+            "model_type": "Qwen-Image-Edit-2511-GGUF",
+            "model_path": "data/models/qwen-image-edit/model.gguf",
+            "icon_path": "data/icons/lira.png",
+            "voice": "kseniya",
+            "chat_format": "plain",
+            "settings": {
+                "steps": 24,
+                "true_cfg_scale": 4.0,
+                "guidance_scale": 1.0,
+                "placement": "model_offload",
+                "skip_accelerate_offload": false,
+                "dtype": "bfloat16",
+                "text_encoder_gpu": false,
+                "text_encoder_on_cpu": true,
+                "hf_repo_id": "Qwen/Qwen-Image-Edit-2511",
+                "negative_prompt": " "
+            }
+        }
+    ],
+    "gallery_search": {
+        "embedding_model": "intfloat/multilingual-e5-small",
+        "embedding_model_path": "data/models/multilingual-e5-small",
+        "embedding_format": "e5",
+        "min_similarity": 0.55,
+        "max_results": 10,
+        "max_vision_images": 10,
+        "vision_batch_size": 10
+    },
+    "gallery_describe": {
+        "max_side": 384,
+        "max_tokens": 220,
+        "subprocess_n_ctx": 3072,
+        "subprocess_chunk_size": 1,
+        "cuda_deep_every": 1,
+        "gpu_handoff": true,
+        "use_subprocess": false
+    },
+    "tts": {
+        "locale": "ru",
+        "model_path": "data/models/v5_5_ru.pt",
+        "speaker": "kseniya",
+        "sample_rate": 48000,
+        "en_speaker": "en_21"
+    }
+}

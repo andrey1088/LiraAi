@@ -1,0 +1,12 @@
+use_default_settings: true
+
+server:
+  secret_key: "lira_local_searxng_secret_key"
+  limiter: false
+  image_proxy: false
+
+search:
+  formats:
+    - html
+    - json
+    - rss

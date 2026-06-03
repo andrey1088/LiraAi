@@ -1,0 +1,19 @@
+# Lira2 — Python-зависимости GUI, tools, память, RAG.
+# Python 3.12+. Перед этим файлом: PyTorch (CUDA) и llama-cpp-python — см. scripts/install-deps.sh
+# и docs/getting-started.md.
+
+PyQt6>=6.10.0,<6.11
+PyQt6-WebEngine>=6.10.0,<6.11
+Pillow>=12.0.0
+numpy>=2.0.0
+Jinja2>=3.1.0
+sounddevice>=0.5.0
+sentence-transformers>=5.3.0
+transformers>=5.5.0
+trafilatura>=2.0.0
+pypdf>=6.0.0
+pymupdf>=1.27.0
+sqlite-vec>=0.1.7
+python-dotenv>=1.0.0
+# Художница (image_sd). install-deps.sh пересоберёт с SD_CUDA=ON при NVIDIA
+stable-diffusion-cpp-python>=0.4.5

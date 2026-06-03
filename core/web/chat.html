@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Lira AI</title>
+    <!-- Chromium resolves sibling assets in this folder -->
+    <link rel="stylesheet" href="style.css">
+    <script src="qrc:///qtwebchannel/qwebchannel.js"></script>
+</head>
+<body>
+    <div class="chat-wrapper" id="chat-wrapper">
+        <div class="chat-header">
+            <div id="sidebar">
+                <div id="hamburger-menu" class="hamburger" onclick="liraApp.toggleSidebar()">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <div id="main-sidebar" class="sidebar">
+                    <div class="sidebar-content">
+                        <nav class="sidebar-nav">
+                            <div class="nav-list">
+                                <div class="nav-item">
+                                    <div class="active-model-card" id="sidebar-model-info"></div>
+                                </div>
+                                <div class="nav-item locale-row">
+                                    <label class="locale-label" for="ui-locale-select">
+                                        <span data-i18n="Interface language">Interface language</span>
+                                    </label>
+                                    <select id="ui-locale-select" class="locale-select"
+                                        onchange="liraApp.onLocaleChange(this.value)">
+                                        <option value="ru" data-i18n="Russian">Russian</option>
+                                        <option value="en" data-i18n="English">English</option>
+                                    </select>
+                                </div>
+                                <div class="nav-item">
+                                    <div class="nav-title" onclick="liraApp.openSubMenu('settings')">
+                                        <i class="icon-settings">⚙️</i>
+                                        <span data-i18n="Model settings">Model settings</span>
+                                    </div>
+                                    <div class="nav-list level-2" id="sidebar-settings-list"></div>
+                                </div>
+                                <div class="nav-item" id="nav-item-history">
+                                    <div class="nav-title" onclick="liraApp.openSubMenu('history')">
+                                        <i class="icon-history">📜</i>
+                                        <span data-i18n="Chat history">Chat history</span>
+                                    </div>
+                                    <div class="nav-list level-2" id="sidebar-history-list"></div>
+                                </div>
+                                <div class="nav-item" id="nav-item-search">
+                                    <div class="nav-title" onclick="liraApp.openSearch()">
+                                        <i class="icon-search">🔍</i>
+                                        <span data-i18n="Search">Search</span>
+                                    </div>
+                                </div>
+                                <div class="nav-item" id="nav-item-downloads">
+                                    <div class="nav-title" onclick="liraApp.openDownloadsFolder()">
+                                        <i class="icon-downloads">📁</i>
+                                        <span data-i18n="Downloads">Downloads</span>
+                                    </div>
+                                </div>
+                                <div class="nav-item" id="nav-item-gallery">
+                                    <div class="nav-title" onclick="liraApp.openSubMenu('gallery')">
+                                        <i class="icon-gallery">🎨</i>
+                                        <span data-i18n="Gallery">Gallery</span>
+                                    </div>
+                                    <div class="nav-list level-2" id="sidebar-gallery-list"></div>
+                                </div>
+                            </div>
+                        </nav>
+                        <div class="sidebar-footer">
+                            <button onclick="liraApp.newChat()" class="action primary" data-i18n="+ New chat">
+                                + New chat
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div id="sidebar-overlay" onclick="liraApp.toggleSidebar()"></div>
+            </div>
+            <div id="model-switcher-container">
+                <button id="mute-btn" onclick="liraApp.toggleMute()" class="icon-btn">🔊</button>
+                <div id="model-switcher" class="model-switcher">
+                    <div id="active-model" class="active-model"></div>
+                    <div id="model-list" class="model-list"></div>
+                </div>
+            </div>
+        </div>
+        <div class="chat-inner" id="chat-inner">
+            <aside id="limbic-aside" class="limbic-aside" aria-hidden="true">
+                <div id="limbic-tools-panel" class="limbic-tools-panel" hidden>
+                    <div class="limbic-tools-block">
+                        <button type="button" class="limbic-tools-toggle" id="limbic-tools-toggle"
+                            onclick="liraApp.toggleLimbicToolsMenu()">
+                            <span class="limbic-tools-toggle-label" data-i18n="Tools">Tools</span>
+                            <span class="limbic-tools-toggle-chevron" aria-hidden="true">▼</span>
+                            <span id="limbic-tools-alert-badge" class="limbic-badge limbic-badge--alert"
+                                hidden data-i18n-attr="aria-label" data-i18n="Requires attention" aria-label="Requires attention">!</span>
+                        </button>
+                        <div id="limbic-tools-menu" class="limbic-tools-menu"></div>
+                    </div>
+                </div>
+                <img id="limbic-emotion-img" class="limbic-emotion-img" alt="" hidden>
+            </aside>
+            <div class="chat-messages-column">
+                <div id="chat"></div>
+            </div>
+        </div>
+        <div id="input-container-wrapper"></div>
+    </div>
+    <div id="lora-modal" class="modal-overlay" style="display:none">
+        <div class="modal-content lora-modal-content">
+            <div class="modal-header">
+                <h3 data-i18n="Available LoRA">Available LoRA</h3>
+                <span class="close-modal" onclick="liraApp.closeLoraModal()">✕</span>
+            </div>
+            <div id="lora-list-container" class="lora-grid">
+                <!-- List rendered by JS -->
+            </div>
+        </div>
+    </div>
+    <div id="blocking-loader" class="blocking-loader-root" aria-hidden="true">
+        <div class="blocking-loader__box">
+            <div class="blocking-loader__spinner"></div>
+            <div class="blocking-loader__text" data-i18n="Please wait…">Please wait…</div>
+        </div>
+    </div>
+    <div id="gallery-describe-modal" class="modal-overlay" aria-hidden="true">
+        <div class="modal-content gallery-describe-modal-content">
+            <div class="modal-header">
+                <h3 data-i18n="Gallery descriptions">Gallery descriptions</h3>
+            </div>
+            <p id="gallery-describe-status" class="gallery-describe-status" data-i18n="Preparing…">Preparing…</p>
+            <p id="gallery-describe-file" class="gallery-describe-file"></p>
+            <div class="gallery-describe-actions">
+                <button type="button" class="action danger" id="gallery-describe-cancel-btn"
+                    onclick="liraApp.cancelGalleryDescribe()" data-i18n="Cancel">Cancel</button>
+            </div>
+        </div>
+    </div>
+    <script type="module" src="chat.js"></script>
+</body>
+</html>

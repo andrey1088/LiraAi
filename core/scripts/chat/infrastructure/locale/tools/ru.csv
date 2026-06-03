@@ -1,0 +1,136 @@
+key,ru
+tools.memory_search.description,"ПОИСК В ДОЛГОВРЕМЕННОЙ ПАМЯТИ (переписка, сохранённые факты). Вызывай ТОЛЬКО когда вопрос явно про прошлый диалог/сохранённые факты; иначе отвечай без инструмента. Только текст (не фото/галерея). Не подставляй служебные фразы и не копируй описание параметров в query. Подряд два memory_search запрещены: один запрос к памяти за шаг цепочки, затем текстовый ответ."
+tools.memory_search.param.query,Короткая тема поиска по памяти (2-10 слов своими словами).
+tools.gallery_search.description,"ПОИСК В ЛОКАЛЬНОЙ ГАЛЕРЕЕ сохранённых генераций (картинки на диске + описания в БД). Сервер выполнит вызов только если в текущем сообщении пользователя есть явный запрос на картинки, фото, галерею, визуал или сохранённые арты (tool_policies.json → user_intent.gallery_message_substrings); иначе вызов отклонят. Сервер ищет в основном семантически (вектор по description), при нехватке — подстрока в description или prompt. Запрос в query передаётся на сервер как есть (фраза на языке пользователя). НЕ для времени, даты, погоды и железа из sens — ответь текстом. НЕ для снимка с веб-камеры — camera_capture. Обращение «{model_name}, …» само по себе не повод искать в галерее. Один вызов gallery_search на ответ; только как первый инструмент в цепочке. Найденные кадры: миниатюры в чате; краткий vision-подвызов по лучшим кадрам."
+tools.gallery_search.param.query,"Поисковый запрос: что искать по смыслу (сцена, объекты, настроение, стиль). Можно короткую фразу или несколько слов. Формулируй по визуальному содержанию, а не по имени ассистента или бытовым словам вопроса."
+tools.camera_capture.description,СНИМОК С ВЕБ-КАМЕРЫ: один кадр с камеры устройства для vision-ответа. Сервер выполнит вызов только если в текущем сообщении пользователя есть явный запрос камеры/веб-камеры (подстроки в tool_policies.json → user_intent.camera_message_substrings); иначе вызов будет отклонён. Перед съёмкой пользователю показывается запрос разрешения (можно запомнить для этого чата). НЕ для галереи сохранённых артов — для этого gallery_search. НЕ для времени/железа из sens. Один вызов camera_capture на ответ; только как первый инструмент в цепочке. Требуется vision-модель (mmproj/chat_handler).
+tools.camera_capture.param.reason,"Кратко, зачем нужен кадр (для лога; необязательно)."
+tools.web_search.description,"ПОИСК В ИНТЕРНЕТЕ (SearXNG). Сервер выполнит вызов только если в текущем сообщении пользователя есть явный запрос данных из сети (подстроки в tool_policies.json → user_intent.web_message_substrings); иначе вызов будет отклонён — отвечай из sens, памяти и знаний. Не для времени/железа из sens. Возвращает заголовки, ссылки и сниппеты; для точных фактов со страницы вызови web_fetch_url по URL из выдачи. Повтор той же выдачи — web_search_saved с тем же research_run_id, не второй web_search подряд. Не вызывай web_fetch_url дважды для одного URL — смотри предыдущие tool-сообщения."
+tools.web_search.param.query,Поисковый запрос для веба.
+tools.web_search.param.limit,Сколько результатов взять (1..10).
+tools.web_search.param.language,"Язык поиска, например ru или en."
+tools.web_search.param.route_mode,Маршрут поиска: auto/default/ru.
+tools.web_search_saved.description,"Повторно вывести из базы заголовки, URL и сниппеты уже выполненного web_search по research_run_id — без нового поиска в интернете. Для другой ссылки из той же выдачи после fetch, вместо второго web_search с тем же смыслом."
+tools.web_search_saved.param.run_id,research_run_id из ответа web_search (число в строке «research_run_id=…»).
+tools.web_fetch_url.description,"ЗАГРУЗКА СТРАНИЦЫ по URL (HTTP) в продолжение web_search в этом же ответе. Без предшествующего web_search в этом ответе не вызывай — сервер отклонит. В конце ответа перечисляются другие URL той же выдачи (research_run_id), по которым ещё не делали fetch. Нужна полная статья, а не только снипет SERP. Не пересказывай сырой JSON пользователю. Один URL — один успешный fetch за ответ."
+tools.web_fetch_url.param.url,Полный URL страницы для чтения.
+tools.web_fetch_url.param.run_id,ID research run из web_search (опционально).
+tools.web_fetch_url.param.route_mode,Маршрут fetch: auto/default/ru.
+policies.system.internet.text,"ИНТЕРНЕТ (web_search, web_fetch_url): sens и память важнее. Новый web_search сервер выполнит только если в текущей реплике пользователя есть явный запрос данных из сети (см. user_intent.web_message_substrings в tool_policies.json); без этого отвечай текстом из контекста и знаний. web_fetch_url — только после разрешённого web_search в этом же ответе, по URL из выдачи."
+policies.tools.memory_search.forbidden_if_last_hint,"Память уже запрашивали на этом шаге — сформируй ответ из результата; web_search только если пользователь в этой реплике явно просил поиск в интернете (сервер проверит). Иначе ответь текстом, не memory_search снова."
+policies.tools.memory_search.extras.gallery_redirect_refusal_message,"memory_search только для текста переписки и фактов, не для картинок. Вызови gallery_search с визуальным запросом (сцена, люди, стиль) на языке пользователя — без дописки «(images)» в query. Если gallery_search отклонят — ответь текстом."
+policies.tools.gallery_search.extras.no_gallery_intent_refusal_message,"gallery_search сейчас недоступен: в сообщении пользователя нет явного запроса на картинки, фото, галерею или сохранённые арты. Ответь текстом; время и показания железа — только из sens."
+policies.tools.gallery_search.extras.suppress_refusal_message,"gallery_search сейчас не выполняется: для этого же сообщения пользователя уже использовались веб-инструменты (факты с сайтов). Не смешивай галерею с дилерами/ценами — продолжай web_fetch_url по другим URL из выдачи или web_search_saved, либо ответь текстом."
+policies.tools.camera_capture.extras.no_camera_intent_refusal_message,camera_capture сейчас недоступен: в сообщении пользователя нет явного запроса снять кадр с камеры или веб-камеры. Ответь текстом; время и показания железа — только из sens.
+policies.tools.camera_capture.extras.suppress_refusal_message,camera_capture сейчас не выполняется: для этого же сообщения пользователя уже использовались веб-инструменты. Не смешивай камеру с фактами с сайтов — продолжай web_fetch_url или ответь текстом.
+policies.tools.web_search.forbidden_if_last_hint,Открой страницы через web_fetch_url по URL из выдачи или web_search_saved с тем же research_run_id.
+policies.tools.web_search.extras.no_web_intent_refusal_message,"web_search сейчас недоступен: в сообщении пользователя нет явного запроса поиска в интернете или актуальных данных из сети. Ответь из sens, памяти и своих знаний; если без сети нельзя — попроси пользователя явно сформулировать запрос на поиск в интернете."
+policies.tools.web_fetch_url.extras.orphan_refusal_message,web_fetch_url сейчас недоступен: открывай страницы только после web_search в этом же ответе (по URL из его выдачи). Сначала вызови web_search.
+chat.tool_history_trunc_marker,[… ответ инструмента обрезан по лимиту длины для истории …]
+tools.memory_search.no_hit,В памяти не найдено ничего релевантного.
+tools.memory_search.context_header,[КОНТЕКСТ ИЗ ПАМЯТИ]:
+tools.memory_search.fact_line,Факт: {reply}
+tools.memory_search.error,Ошибка при обращении к памяти: {e}
+tools.memory_search.skipped_empty,[memory_search пропущен: пустой запрос]
+tools.memory_search.skipped_irrelevant,[memory_search пропущен: в вопросе нет явной ссылки на прошлый диалог или сохранённые факты]
+tools.web_search.empty_query,Запрос пустой.
+tools.web_search.no_window,Ошибка: нет контекста окна для запуска web-search сервиса.
+tools.web_search.unavailable,Web search недоступен: {details}
+tools.web_search.error,Ошибка web_search: {e}
+tools.web_search.error_prefix,Ошибка web_search
+tools.web_search.no_results,По запросу ничего не найдено.
+tools.web_search.no_title,(без заголовка)
+tools.web_search.result_line,"{i}. {title}
+URL: {link}
+Сниппет: {snippet}
+RouteHint(for fetch): {route_hint}"
+tools.web_search.header,"Результаты web_search (route={route_mode}, research_run_id={run_id}). Для web_fetch_url при желании передай тот же run_id.
+
+"
+tools.web_search.skipped_empty,[web_search пропущен: пустой запрос]
+tools.web_search_saved.no_window,Ошибка: нет контекста окна.
+tools.web_search_saved.bad_run_id,Некорректный research_run_id.
+tools.web_search_saved.not_found,research_run_id={rid} не найден или не относится к текущей сессии. Сначала вызови web_search или проверь номер run из его ответа.
+tools.web_search_saved.empty,"По research_run_id={rid} нет сохранённых позиций web_search (возможно, выдача была пустой)."
+tools.web_search_saved.line,"{i}. {title}
+URL: {u}
+Сниппет: {sn}"
+tools.web_search_saved.header,"Сохранённая выдача web_search из базы (research_run_id={rid}), без нового поиска в интернете:
+
+"
+tools.web_search_saved.footer,Дальше при необходимости вызывай web_fetch_url с url=... и run_id={rid}.
+tools.web_search_saved.skipped,[web_search_saved пропущен: укажи целочисленный run_id из ответа web_search]
+tools.web_fetch.empty_url,Пустой URL.
+tools.web_fetch.no_window,Ошибка: нет контекста окна.
+tools.web_fetch.error,Ошибка web_fetch_url: {e}
+tools.web_fetch.error_prefix,Ошибка web_fetch_url
+tools.web_fetch.serp_line,"- {title}
+  {url}
+  Сниппет: {sn}"
+tools.web_fetch.serp_tail,"
+
+--- Из той же сохранённой выдачи web_search (research_run_id={run_id}), ещё не открывали через web_fetch_url ---
+"
+tools.web_fetch.serp_done,"(Других URL из этой выдачи, которые ещё не пробовали, не осталось — при другом смысле запроса сделай новый web_search.)"
+tools.web_fetch.loaded,"Контент страницы загружен (route={route}, chars={n}).
+URL: {url}
+Краткая выжимка:
+{short}"
+tools.web_fetch.skipped_empty,[web_fetch_url пропущен: пустой url]
+tools.web_fetch.dedupe,Повторная загрузка пропущена: этот URL уже успешно открывали в этом ответе ({url}). Не вызывай web_fetch_url для него снова — используй текст из предыдущего сообщения tool.
+tools.camera_capture.no_window,Нет окна приложения
+tools.recall_knowledge.skipped_visual,"Поиск в текстовой памяти пропущен, так как найден визуальный запрос."
+chat.tool_refusal.chain_step,{fn_name} недоступен: по правилам сервера этот инструмент разрешён только на шаге цепочки {steps} (сейчас шаг {step}). Продолжи инструментами из текущего меню или ответь текстом.
+chat.tool_refusal.after_last,{fn_name} недоступен сразу после «{last}»: такой порядок вызовов запрещён.{hint} Используй инструменты из меню на этом шаге или ответь текстом.
+chat.tool_not_found,Ошибка: инструмент {name} не найден.
+chat.gallery_search.frame_line,Кадр №{i}: {cap}
+chat.gallery_search.vision_context,"ИСХОДНЫЙ ВОПРОС ПОЛЬЗОВАТЕЛЯ (опирайся на него в первую очередь; галерея — только если реально помогает):
+{question}
+
+Результаты gallery_search по запросу инструмента «{query}» (в vision: {vision_n} из {total_n} кадров{batch_note}).
+ТЕКСТОВЫЕ ПРОМПТЫ ЭТИХ КАДРОВ:
+{prompts}
+Кадры также показаны пользователю в чате сеткой. ТВОЯ ЗАДАЧА: ответь как {model_name}, кратко и по делу, без пересказа списком — прокомментируй то, что видишь.
+"
+chat.gallery_search.meta,"
+
+[gallery_search] Запрос инструмента: {query!r}. Кадров в выдаче: {total} (в vision передано {vision_n}).
+Промпты кадров:
+{prompts}"
+chat.gallery_search.found,[gallery_search] Кадры найдены.
+chat.gallery_search.empty,[В галерее ничего не нашлось по этому запросу]
+chat.gallery_search.default_query,поиск
+chat.camera_capture.vision_context,"ИСХОДНЫЙ ВОПРОС ПОЛЬЗОВАТЕЛЯ:
+{question}
+
+Это один свежий кадр с веб-камеры пользователя (camera_capture). Кадр показан пользователю в чате. ТВОЯ ЗАДАЧА: ответь как {model_name}, кратко — что видишь и по сути вопроса.
+"
+chat.camera_capture.meta_path,"
+
+[camera_capture] Кадр: {path}"
+chat.camera_capture.meta_reason, Причина вызова: {reason!r}.
+chat.camera_capture.received,[camera_capture] Кадр получен.
+chat.camera_capture.denied,[camera_capture] Пользователь отклонил доступ к камере. Ответь текстом или предложи прикрепить фото вручную.
+chat.camera_capture.cancelled,[camera_capture] Захват отменён пользователем.
+chat.camera_capture.unavailable,[camera_capture] Камера недоступна: {msg}.
+chat.camera_capture.failed,[camera_capture] Не удалось снять кадр: {msg}.
+chat.camera_capture.no_vision,camera_capture недоступен: у активной модели нет vision (mmproj/chat_handler). Ответь текстом или попроси пользователя прикрепить фото.
+chat.camera_capture.user_cancelled,Пользователь отменил захват с камеры
+chat.camera_capture.empty_frame,Пустой кадр с камеры
+chat.camera_capture.save_failed,Не удалось сохранить кадр
+chat.camera_capture.no_device,нет устройства
+chat.camera_capture.error_generic,ошибка
+chat.vision.images_no_vision,"[Изображения получены, vision недоступен]"
+chat.vision.frames_comment_failed,[Кадры получены; краткий vision-комментарий не удался — смотри лог]
+chat.vision.batch_note,"(Пакет vision {bi}/{n_batches}, кадры {start}–{end} из {total}; прокомментируй только эти кадры.)"
+chat.domain.tool_pending,[Выполняю вызов инструмента…]
+chat.worker.empty_model_reply,Пустой ответ модели — попробуй переформулировать вопрос или задать его короче.
+chat.worker.gallery_searching,[Выполняю вызов инструмента…]
+chat.worker.gallery_shown,[Системное уведомление: Ты успешно показала пользователю изображения из галереи]
+chat.worker.model_error,Ошибка модели: {e}
+chat.worker.parse_error,Ошибка парсинга: {e}
+chat.worker.telegram_notice,Заметила сообщение в Telegram — отвечаю без инструментов.
+notify_andrey.description,"Зафиксировать решение после обмена в Telegram-боте. Вызывай ВСЕГДА (один раз за оценку). should_notify_andrey=true ТОЛЬКО если в строке «Спросили» собеседник явно просил передать что-то владельцу. should_notify_andrey=false во всех остальных случаях. Не используй message, чтобы объяснить отказ."
+notify_andrey.param.should_notify,true — прервать {user_name_genitive} в десктоп-чате {app_name}; false — молчать в десктоп-чате (ответ в боте уже был).
+notify_andrey.param.message,"Только при should_notify_andrey=true: что передать владельцу, 1–2 предложения. Формат: «В Telegram user_id=… просят передать: …». При false оставь пустым или не передавай."
+notify_andrey.examples,Примеры в описании инструмента.

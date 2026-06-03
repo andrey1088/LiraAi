@@ -1,0 +1,30 @@
+[tool.ruff]
+target-version = "py312"
+line-length = 120
+
+exclude = [
+  ".git",
+  ".venv",
+  "venv",
+  "__pycache__",
+]
+
+src = ["core", "scripts", "tuning"]
+
+[tool.ruff.lint]
+# Phase 2: keep the baseline conservative so we can iteratively clean.
+select = ["E", "F", "I", "B"]
+extend-ignore = ["E402", "E501"]
+
+# Let CI/maintainer decide what becomes errors later; for now we just
+# enable fixes for the selected categories.
+fixable = ["ALL"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["core", "scripts", "infrastructure", "tools"]
+combine-as-imports = true
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+

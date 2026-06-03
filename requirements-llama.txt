@@ -1,0 +1,6 @@
+# llama-cpp-python — сборка с CUDA (GGML_CUDA). На эталонной машине проверено с 0.3.23.
+# Установка через install-deps.sh (CMAKE_ARGS) или вручную:
+#   CMAKE_ARGS="-DGGML_CUDA=on" pip install llama-cpp-python==0.3.23
+#
+# Закреплённый git-коммит (как в рабочем venv автора):
+llama-cpp-python @ git+https://github.com/abetlen/llama-cpp-python.git@5dd9b1ce2ceefe61779f92c1be539dd2df77c77c

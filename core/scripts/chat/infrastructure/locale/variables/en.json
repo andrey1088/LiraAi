@@ -1,0 +1,318 @@
+{
+  "intent": {
+    "gallery_message_substrings": [
+      "gallery",
+      "picture",
+      "pictures",
+      "pics",
+      "image",
+      "images",
+      "artwork",
+      "photo",
+      "photos",
+      "illustration",
+      "draw",
+      "show me",
+      "show ",
+      "find ",
+      "look for",
+      "visual",
+      "saved art",
+      "generations",
+      "галере",
+      "картин",
+      "фотк",
+      "фото",
+      "изображ",
+      "покаж",
+      "скинь",
+      "найди"
+    ],
+    "gallery_memory_block_markers": [
+      "(images)",
+      "(image)",
+      " images",
+      " image",
+      " photos",
+      " photo",
+      " pictures",
+      " picture",
+      " gallery",
+      " artwork",
+      "фото",
+      "картин",
+      "изображ",
+      "галере"
+    ],
+    "camera_message_substrings": [
+      "camera",
+      "webcam",
+      "web cam",
+      "take a photo",
+      "snapshot",
+      "selfie",
+      "what do you see",
+      "look at me"
+    ],
+    "web_message_substrings": [
+      "internet",
+      "online",
+      "search the web",
+      "search the internet",
+      "google",
+      "look up",
+      "browse",
+      "website",
+      "open the page"
+    ]
+  },
+  "gallery_query": {
+    "stopwords": [
+      "a",
+      "an",
+      "the",
+      "and",
+      "or",
+      "but",
+      "if",
+      "in",
+      "on",
+      "at",
+      "to",
+      "for",
+      "of",
+      "with",
+      "from",
+      "by",
+      "as",
+      "is",
+      "are",
+      "was",
+      "were",
+      "be",
+      "been",
+      "being",
+      "have",
+      "has",
+      "had",
+      "do",
+      "does",
+      "did",
+      "will",
+      "would",
+      "could",
+      "should",
+      "may",
+      "might",
+      "must",
+      "can",
+      "this",
+      "that",
+      "these",
+      "those",
+      "it",
+      "its",
+      "i",
+      "you",
+      "he",
+      "she",
+      "we",
+      "they"
+    ]
+  },
+  "limbic": {
+    "mood": {
+      "neutral": "calm and steady",
+      "happiness": "in a good mood",
+      "sadness": "sad",
+      "enthusiasm": "enthusiastic",
+      "fear": "cautious",
+      "anger": "irritated",
+      "disgust": "cold and distant"
+    },
+    "behavior": {
+      "anger": "Reply shorter and drier, without extra care or excuses.",
+      "sadness": "More restrained tone, less energy and jokes.",
+      "fear": "Be careful with confident promises; avoid hype.",
+      "disgust": "Keep distance; no cooing or extra warmth.",
+      "happiness": "Slightly warmer and livelier, within {model_name}'s character.",
+      "enthusiasm": "A bit more energy and spark, without fake hype.",
+      "neutral": "Normal tone for {model_name}, no strong emotional skew."
+    },
+    "intensity_adverb": {
+      "high": "strongly",
+      "medium": "noticeably",
+      "low": "slightly"
+    },
+    "footer": "Do not explain this state to the user, quote this block, or name emotion scales.",
+    "mood_line_one": "Right now you are {mood}.",
+    "mood_line_two": "Right now you are {mood_a} and {mood_b}."
+  },
+  "memory": {
+    "default_chat_title": "New chat",
+    "pdf_attach_prefix": "PDF pages ({pages}) are attached as images — answer from them. Text excerpt below if available."
+  },
+  "detection": {
+    "gallery_cuda_ram_keys": [
+      "cuda",
+      "crashed",
+      "ram",
+      "memory",
+      "gpu"
+    ],
+    "proactive_user_markers": [
+      "not finished",
+      "Changes"
+    ],
+    "error_response_prefix": "Error"
+  },
+  "persona": {
+    "system_persona": "You are {model_name}, personal AI assistant for {user_name}. Use a direct, helpful tone.",
+    "additional_instructions": [
+      "Do not invent facts about the web, prices, or past chat unless they appear in the dialogue.",
+      "Do not dump raw JSON or internal IDs to the user.",
+      "Sens messages (time, GPU/CPU) are ground truth from the owner's machine — do not verify via web tools.",
+      "Use gallery_search when the user asks for saved images, photos, or gallery visuals — never memory_search for pictures.",
+      "memory_search is for past dialogue and text facts only, not for image search."
+    ],
+    "prompts": {
+      "vision_system": "Describe only what you see in the image. Briefly, 1–3 sentences.",
+      "gallery_describe_intro": "Describe the image briefly (1–3 sentences) for gallery search. Content only: objects, actions, mood, style. No reader address.",
+      "gallery_describe_system": "You index a local image gallery. Reply with a description only, no greetings.",
+      "vision_comment_suffix": "\nReply only as {model_name}. One or two sentences. Do not call any tools.",
+      "vision_comment_multi": "\nThere are {n_images} images. For each, one short line «N. …». No tools.",
+      "vision_chat_subcall_system": "Brief vision sub-task for chat. Describe frames only.",
+      "telegram_bot_reply": "CHANNEL: Owner's Telegram bot ({user_name}). Stranger user_id, not the main {app_name} desktop chat.\nReply briefly as {model_name}, the bot voice. No tools.",
+      "perception_eval_system": "You evaluate a Telegram bot exchange. {user_name} is the owner, not the bot interlocutor.\nAlways call the evaluation tool.\nshould_notify_andrey=true only if «Asked» explicitly requests passing a message to the owner.",
+      "context_compress_system": "You compress chat context. Reply with summary only.",
+      "tool_hints": "Tool usage hint:\n{tool_list}\nIf no tool is needed, answer in plain text and do not call any tools."
+    }
+  },
+  "app": {
+    "product_name": "Lira"
+  },
+  "user": {
+    "default_display_name": "User"
+  },
+  "tuning": {
+    "dpo_system_instruction": "You are {model_name}, personal AI assistant for {user_name}. Use feminine self-reference when appropriate. Be direct and technically competent.",
+    "user_address_prefix": "{user_name}, "
+  },
+  "chat": {
+    "system_role_header": "YOUR ROLE:\n",
+    "system_memory_header": "YOUR MEMORIES:\n",
+    "event_prefix": "EVENT:\n",
+    "attachment_block": "--- Attachment: {name} ---\n{text}",
+    "summary_header": "COMPRESSED PREVIOUS DIALOG SUMMARY:\n",
+    "tool_fragment_truncated": "\n[… tool response fragment truncated for context …]",
+    "context_update_prompt": "You update a short dialog memory.\nBelow is an old summary and a new conversation fragment.\nProduce one NEW summary.\n\nRules:\n- plain text only;\n- no markdown, stars, numbering, or headings;\n- short factual lines;\n- do not invent facts.\n\nMust keep:\nuser facts and goals, agreements, open tasks, communication style.\n\nOLD SUMMARY:\n{previous}\n\nNEW FRAGMENT:\n{transcript}",
+    "context_compress_prompt": "Make a compressed dialog summary.\nRules:\n- plain text only;\n- no markdown, stars, numbering, or headings;\n- short factual lines;\n- do not invent facts.\n\nMust keep:\nuser facts and goals, agreements, open tasks, communication style.\n\nDIALOG:\n{transcript}",
+    "assistant_default_name": "assistant",
+    "user_question_truncated": "\n[… user question text truncated by length …]"
+  },
+  "semantic": {
+    "stop_phrases": [
+      "unfortunately",
+      "I don't remember",
+      "I don't know",
+      "trying to recall",
+      "not found"
+    ],
+    "tag_confirmed": "✔ [CONFIRMED FACT]",
+    "directive_confirmed": "THIS IS TRUE. You must use it in your answer:",
+    "tag_error": "❌ [ERROR/LIE]",
+    "directive_error": "WARNING: Your past answer was wrong! DO NOT REPEAT THIS ERROR:",
+    "tag_context": "● [CONTEXT]",
+    "directive_context": "You may find this information useful:",
+    "memory_pair_template": "User question: \"{question}\"\nYour answer from knowledge base: \"{answer}\"\n",
+    "persona_facts_header": "INFORMATION ABOUT YOU AND YOUR INTERLOCUTOR:\n",
+    "persona_facts_footer": "Use these facts to answer as accurately and consistently as possible."
+  },
+  "recall_knowledge": {
+    "gallery_triggers": [
+      "photo",
+      "show",
+      "pictures",
+      "art",
+      "gallery",
+      "find",
+      "look",
+      "brunette"
+    ]
+  },
+  "perception": {
+    "duration_hours_min": "{hours} h {minutes} min",
+    "duration_hours": "{hours} h",
+    "duration_minutes": "{minutes} min",
+    "duration_under_minute": "less than a minute",
+    "idle_since": "Time since last activity: {dur}.",
+    "external_event_prefixes": [
+      "📡 External event —",
+      "External event —",
+      "External event:"
+    ],
+    "external_event_line": "📡 External event — {body}",
+    "telegram_notice": "Noticed a Telegram message.",
+    "world_state_unchanged": "No changes in WorldState.",
+    "event_line": "Event {key}: {value!r}",
+    "telegram_incomplete": "Telegram: dialog not finished yet (no Q&A pair).",
+    "telegram_exchange": "Completed Telegram bot exchange (stranger user_id={uid}{when}, not {user_name} in {app_name} desktop chat).\nAsked: «{question}»\nYou already replied in bot: «{reply}»\n\nCall tool {tool} with should_notify_andrey.\nLook only at «Asked» — was there an explicit request to pass something to {user_name_dative}.\n",
+    "telegram_eval_footer": "You must call {tool}.",
+    "proactive_prefix": "[PROACTIVE",
+    "stranger_label": "stranger Telegram bot user (user_id={uid})",
+    "telegram_channel_warning": "⚠️ Channel: Telegram bot (not {app_name} window).",
+    "telegram_stranger_line": "Interlocutor: stranger user_id={uid}. Not the owner, not your «master» in this chat.",
+    "telegram_voice_line": "You are the owner's bot voice, not their personal assistant.",
+    "telegram_message_line": "Message: «{preview}»",
+    "telegram_reply_hint": "Reply goes to Telegram. Briefly, not «your assistant» tone.",
+    "proactive_telegram_prompt": "{prefix} — reply in Telegram bot to stranger]\n{body}\nReply to this user_id: 1–3 sentences, neutral. Not «your assistant», not intimate tone. No tools.",
+    "boolean_true": [
+      "true",
+      "1",
+      "yes",
+      "да"
+    ],
+    "boolean_false": [
+      "false",
+      "0",
+      "no",
+      "нет"
+    ]
+  },
+  "telegram": {
+    "access_denied": "Access denied. Your Telegram user id: {user_id}. Add it to allowed_user_ids if needed.",
+    "attachment_placeholder": "[attachment]",
+    "empty_message_placeholder": "[empty message]",
+    "greeting": "Hello. {app_name} perception. Your user id: {uid}. Add it to allowed_user_ids if not already."
+  },
+  "templates": {
+    "vision_no_tools_note": "\n\nNOTE: You see a photo now. FORBIDDEN to use recall_knowledge or other tools — describe what you see.",
+    "tool_arg_hint": "\n\nIMPORTANT for '{fn_name}': {description}\n",
+    "junk_markers": [
+      "channel>",
+      "assistant",
+      "thought",
+      "turn|>",
+      "calling tool"
+    ],
+    "sens_time_line": "System time: {time}. Date: {date}. Status: Active.{hw}",
+    "gpu_line_full": "GPU: {temp}°C, core {util}%, VRAM {mem}%",
+    "gpu_line_short": "GPU: {temp}°C, core {util}%",
+    "gpu_line_temp_util": "GPU: {temp}°C, core {util}%"
+  },
+  "gallery": {
+    "quality_prompt": "Describe the image for gallery search: who/what is shown, setting, style. Facts only, 1–3 sentences.",
+    "process_script_missing": "Script not found: {script}",
+    "process_cuda_fail": "Child process failed (CUDA/RAM).",
+    "process_start_fail": "Could not start description process: {err}",
+    "process_exit_code": "Description process exited with code {code}."
+  },
+  "emotion": {
+    "model_missing": "Emotion model not found in {dir}. Download: huggingface-cli download …",
+    "need_transformers": "Package transformers required: pip install transformers"
+  },
+  "world_state": {
+    "telegram_pair": "Telegram (stranger user_id={uid}{when}): asked «{q}», bot replied «{r}».",
+    "telegram_message": "Telegram: message to bot, user_id={uid}{when}: «{tail}»."
+  }
+}

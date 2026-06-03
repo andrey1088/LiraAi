@@ -1,0 +1,129 @@
+            #centralWidget {
+                background-color: rgba(26, 26, 26, 200); /* 200 — это прозрачность */
+                border: 2px solid #1E90FF; /* Неоновый контур Razer */
+                border-radius: 20px;
+            }
+
+            #headerWidget {
+                background-color: rgba(20, 20, 20, 0.95); /* Почти черный, как ты хотел */
+                border-top-left-radius: 20px;
+                border-top-right-radius: 20px;
+            }
+
+            QTextEdit {
+                background-color: rgba(37, 37, 37, 150); /* Тоже чуть прозрачный */
+                color: #00ff00;
+                border: 1px solid #444;
+                border-radius: 10px;
+                font-family: 'Monospace';
+                padding: 5px;
+            }
+            QLineEdit {
+                background-color: #333;
+                color: white;
+                border-radius: 5px;
+                padding: 5px;
+            }
+            QPushButton {
+                background-color: #1E90FF;
+                color: black;
+                font-weight: bold;
+                padding: 5px;
+                border-radius: 5px;
+            }
+            QLabel#searchStatusLabel {
+                color: #888;
+                font-size: 11px;
+                padding: 0 10px 4px 10px;
+            }
+            QPushButton#searchNavBtn {
+                background-color: #1E90FF;
+                color: #000;
+                font-weight: bold;
+                padding: 6px 10px;
+                border: none;
+                border-radius: 5px;
+                min-height: 28px;
+            }
+            QPushButton#searchNavBtn:hover {
+                background-color: #4682B4;
+                color: #fff;
+            }
+            QPushButton#searchNavBtn:pressed {
+                background-color: #1873cc;
+                color: #000;
+            }
+            QPushButton#searchNavBtn:disabled {
+                background-color: rgba(60, 60, 60, 0.5);
+                color: #666;
+                border: none;
+            }
+            QLineEdit#searchUrlEdit {
+                background-color: #2a2a2a;
+                color: #eee;
+                border: 1px solid rgba(30, 144, 255, 0.35);
+                border-radius: 6px;
+                padding: 6px 10px;
+            }
+            QLineEdit#searchUrlEdit:focus {
+                border-color: #1E90FF;
+            }
+            QPushButton#closeBtn {
+                background-color: transparent;
+                color: #1E90FF; /* Красный неон */
+                font-size: 30px;
+                border: none;
+            }
+            QPushButton#closeBtn:hover {
+                color: #1e35ff;
+            }
+            /* Весь вертикальный скроллбар */
+            QScrollBar:vertical {
+                border: none;
+                background: rgba(30, 30, 30, 100);
+                width: 4px; /* Делаем его узким */
+                margin: 0px 0px 0px 0px;
+                border-radius: 4px;
+            }
+
+            /* "Ползунок" */
+            QScrollBar::handle:vertical {
+                background: #1E90FF; /* Наш фирменный зеленый */
+                min-height: 20px;
+                border-radius: 4px;
+            }
+
+            /* Цвет при наведении */
+            QScrollBar::handle:vertical:hover {
+                background: #1E90FF;
+            }
+
+            /* Убираем стрелочки сверху и снизу */
+            QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {
+                height: 0px;
+            }
+
+            QPlainTextEdit {
+                background-color: rgba(40, 40, 40, 150);
+                color: white;
+                border: 1px solid #1E90FF;
+                border-radius: 10px;
+                padding: 10px;
+            }
+
+            /* Скроллбар для инпута сделаем таким же, как в чате */
+            QPlainTextEdit QScrollBar:vertical {
+                width: 4px;
+            }
+
+            #maxBtn {
+                background: transparent;
+                color: #888;
+                border: none;
+                font-size: 14px;
+            }
+
+            #maxBtn:hover {
+                background: rgba(255, 255, 255, 0.1);
+                color: #fff;
+            }

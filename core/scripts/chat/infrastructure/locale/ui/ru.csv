@@ -1,0 +1,252 @@
+key,ru
+Interface language,Язык интерфейса
+Russian,Русский
+English,English
+Model settings,Настройки модели
+Chat history,История чатов
+Search,Поиск
+Downloads,Загрузки
+Gallery,Галерея работ
++ New chat,+ Новый чат
+Back,⬅️ Назад
+Save,Сохранить
+Tools,Инструменты
+Requires attention,Требует внимания
+Please wait…,Подождите…
+"Please wait, finishing the current reply…","Подождите, завершаем текущий ответ…"
+Scanning models folder…,Сканирую папку моделей…
+Settings saved,Настройки применены и сохранены
+Available LoRA,Доступные LoRA
+Gallery descriptions,Описания для галереи
+Cancel,Прервать
+Capture frame,Снять кадр
+Preparing…,Подготовка…
+Message…,Сообщение…
+What to draw? (prompt)…,Что нарисовать? (Prompt)…
+Exclude (negative prompt)…,Исключить (Negative Prompt)…
+Ready to generate…,Готова к генерации…
+Creating new chat…,Создаём новый чат…
+New chat started,Начат новый диалог
+Delete this chat permanently?,Удалить чат навсегда?
+Deleting…,Удаляем…
+Enter a new title:,Введите новое название:
+No LoRA files in /models/lora/,Лоры не найдены в папке /models/lora/
+Already in prompt,Уже в промпте
+What should we do with the image(s)? For two photos describe the composition (English is usually more stable)…,Что сделать с картинкой(ами)? Для двух фото опишите композицию (на английском обычно стабильнее)…
+Main image (required),Основное изображение (обязательно)
+Photo,📎 Фото
+Second image for composition (optional),Второе изображение для композиции (необязательно)
+Photo 2,🖼 Фото 2
+Apply edit,✨ Применить правку
+Square 1:1,Квадрат 1:1
+Landscape 16:9,Альбом 16:9
+Portrait 9:16,Портрет 9:16
+Apply LoRA,Применить LoRA
+Draw,🎨 Рисовать
+Save to dataset,Сохранить в датасет
+Save to memory,Сохранить в память
+"Photo (JPG, PNG, WebP) or document (TXT, MD, PDF)","Фото (JPG, PNG, WebP) или документ (TXT, MD, PDF)"
+Take a photo with the camera,Снять фото с камеры
+Task unavailable,Задача недоступна
+Failed to start,Не удалось запустить
+Start error,Ошибка запуска
+Task is not available for this model,Задача недоступна для этой модели
+Not implemented,Не реализовано
+Failed to start description refresh,Не удалось запустить обновление описаний
+File {name} is too large. Max 6 MB.,Файл {name} слишком тяжелый. Максимум 6 Мб.
+Could not start document upload.,Не удалось начать загрузку документа.
+Documents are not supported in this build.,Документы не поддерживаются в этой сборке.
+"File {name}: only JPG, PNG, WebP or TXT/MD/PDF.","Файл {name}: только JPG, PNG, WebP или TXT/MD/PDF."
+"File {name} is not supported. Only JPG, PNG and WebP.","Файл {name} не подходит. Только JPG, PNG и WebP."
+document,документ
+Attach the main image first (Photo button). Second is optional.,Сначала прикрепите основное изображение (кнопка «Фото»). Второе — по желанию.
+Editing image…,Редактирую изображение…
+Painting your masterpiece…,Рисую ваш шедевр…
+Canvas cleared. Attach a new photo and describe the edit.,Холст очищен. Прикрепите новое фото и опишите правку.
+Canvas cleared. Ready for new ideas! 🎨,Холст очищен. Готова к новым идеям! 🎨
+Opening folder is unavailable,Открытие папки недоступно
+Could not open downloads folder,Не удалось открыть папку загрузок
+Error opening folder,Ошибка открытия папки
+Loading…,⌛ Загрузка…
+Copy prompt,📋 Копировать промпт
+Save description,💾 Сохранить описание
+Description for search,Описание для поиска
+Briefly: what is in the image…,Кратко: что на изображении…
+Description saved,💾 Описание сохранено
+Could not save description,Не удалось сохранить описание
+Save failed,Ошибка сохранения
+Prompt is empty,Промпт пуст
+Prompt copied,📋 Промпт скопирован
+Attachments are only available in chat with a multimodal model,Прикрепление доступно в чате с мультимодальной моделью
+No file path,Нет пути к файлу
+Image attached to message,📎 Изображение прикреплено к сообщению
+Could not attach image,Не удалось прикрепить изображение
+Gallery is empty for now,Галерея пока пуста
+Delete this artwork?,Удалить этот шедевр?
+Attach to message for analysis,Прикрепить к сообщению для анализа
+All works,Все работы
+Newest first,▼ Сначала новые
+Oldest first,▲ Сначала старые
+{count} images,{count} изображений
+Preparing… releasing GPU and starting description,Подготовка… освобождаем GPU и запускаем описание
+Done: {done} of {total},Готово: {done} из {total}
+Descriptions saved: {saved} of {total},Сохранено описаний: {saved} из {total}
+. Still without description: {missing},. Без описания осталось: {missing}
+Model returned no description text — see logs/lira.log,Модель не вернула текст описания — см. logs/lira.log
+Cancelled: {done} of {total},Прервано: {done} из {total}
+Processed {done} of {total}…,Обработано {done} из {total}…
+File: {name},Файл: {name}
+Retry for {count} with English prefix / tags ({done}/{total})…,Повтор для {count} с англ. началом / тегами ({done}/{total})…
+Regenerating descriptions,Перегенерация описаний
+{total} total: releasing GPU for batch description…,Всего {total}: освобождаем GPU для пакетного описания…
+Chat paused for now; faster than CPU,"Чат на время паузы; это быстрее, чем CPU"
+Processed {done} of {total}: loading chat model again…,Обработано {done} из {total}: возвращаем модель в чат…
+"— GPU, separate process","— GPU, отдельный процесс"
+— background process,— фоновый процесс
+{total} to describe{suffix},Всего к описанию: {total}{suffix}
+Batch description on GPU starting soon…,Скоро старт пакетного описания на видеокарте…
+{missing} gallery image(s) without description. Open Tools on the left and tap Add descriptions.,В галерее {missing} изображ. без описания. Раскройте «Инструменты» слева и нажмите «Добавить описания».
+LoRA {name} added,LoRA {name} добавлена
+GPU layers (n_gpu_layers):,Слои на GPU (n_gpu_layers):
+"−1 = all layers on GPU. Fewer layers use CPU, less VRAM, slower. Reload model after change.","−1 = все слои на GPU. Меньше — часть на CPU, меньше VRAM, медленнее. После смены — перезагрузка модели."
+History budget (tokens):,Бюджет истории (токены):
+Hardware cap at n_ctx={nCtx}: ~{hwCap} (reserve for reply + template).,Потолок по железу при n_ctx={nCtx}: ~{hwCap} (резерв под ответ + шаблон).
+Volume:,Громкость:
+text_encoder on GPU (OOM risk),text_encoder на GPU (риск OOM)
+Add descriptions,Добавить описания
+Generate descriptions for frames without description,Сгенерировать описания для кадров без description
+Fix descriptions,Исправить описания
+Regenerate broken or empty descriptions,Перегенерировать битые или пустые описания
+Thinking…,Думаю…
+Reacting to event…,Реакция на событие…
+Preparing reply…,Готовлю ответ...
+Searching gallery…,Ищу в галерее...
+Camera…,Камера…
+Searching chat history…,Ищу в переписке...
+Searching the web…,Ищу в интернете...
+Reading saved results…,Читаю сохранённую выдачу...
+Opening link…,Открываю ссылку...
+Processing request…,Обрабатываю запрос...
+Telegram…,Telegram…
+{app_name} is already running,{app_name} уже запущена
+Two instances cannot run on the same GPU.,Две копии не могут работать одновременно на одной видеокарте.
+Startup error,Ошибка запуска
+"Initializing {app_name}…
+Loading model into CUDA","Инициализация {app_name}…
+Загрузка нейросети в CUDA"
+"[Lira] Full session log (print, stderr, uncaught exceptions):
+  {path}","[Lira] Полный лог сессии (print, stderr, неперехваченные исключения):
+  {path}"
+"[Lira] Qwen Image Edit log (load/edit stages, append):
+  {path}","[Lira] Лог Qwen Image Edit (этапы загрузки/редактирования, append):
+  {path}"
+New chat,Новый чат
+User,Пользователь
+Model file not found: {path},файл модели не найден: {path}
+Qwen load interrupted,загрузка Qwen прервана
+Gallery description refresh already running.,Уже выполняется обновление описаний.
+Wait for the chat reply to finish.,Дождитесь окончания ответа в чате.
+Wait for image generation to finish.,Дождитесь окончания генерации изображения.
+No empty or broken descriptions to fix.,Нет пустых или битых описаний для исправления.
+All images already have descriptions.,Все изображения уже с описанием.
+A multimodal vision model must be loaded (clip) — switch model in chat.,Нужна загруженная мультимодальная модель с vision (clip) — переключите модель в чате.
+Gallery descriptions aborted: {message},Описания галереи прерваны: {message}
+Descriptions done but could not restore chat model: {message}. Restart {app_name} or switch model in the menu.,"Описания обработаны, но не удалось вернуть модель в чат: {message}. Перезапустите {app_name} или смените модель в меню."
+Image file not found.,Файл изображения не найден.
+Image too large (max. {mb} MB).,Изображение слишком большое (макс. {mb} Мб).
+Could not attach image.,Не удалось прикрепить изображение.
+Document upload not found (session reset).,Загрузка документа не найдена (сессия сброшена).
+File incomplete ({got} of {expected} bytes). Try again.,Файл передан не полностью ({got} из {expected} байт). Попробуйте снова.
+File decode error: {e},Ошибка декодирования файла: {e}
+ p.{page}, стр.{page}
+PDF not converted to images for vision. In Lira2 venv run: pip install pymupdf,PDF не преобразован в картинки для vision. В venv Lira2 выполните: pip install pymupdf
+🖼 {pages} PDF pages → vision,🖼 {pages} стр. PDF → vision
+🖼 {pages} PDF pages,🖼 {pages} стр. PDF
+Wait for gallery description refresh to finish.,Подождите окончания обновления описаний галереи.
+Wait for the proactive notification to finish.,Подождите проактивного уведомления.
+"📎 Attach the main image (Photo button), then describe the edit in text.","📎 Прикрепите основное изображение (кнопка «Фото»), затем опишите правку в тексте."
+Accepted Telegram message. Replying without tools — send again if you need more.,"Приняла сообщение в Telegram. Сейчас отвечаю без инструментов — напишите ещё раз, если нужно."
+Noticed a Telegram message.,Заметила сообщение в Telegram.
+⏳ Wait for the current generation or edit to finish.,⏳ Дождитесь окончания текущей генерации или редактирования.
+⚠️ An error occurred: {message},⚠️ Произошла ошибка: {message}
+❌ Error: model returned no image.,❌ Ошибка: модель не вернула изображение.
+❌ Model not loaded yet.,❌ Модель ещё не загружена.
+[Nothing to save to memory yet],[Пока нечего сохранять в память]
+[System: Marked for memory],[Система: Отмечено для памяти]
+[No history entry for this pair],[Нет записи в истории для этой пары]
+[Nothing to save yet],[Пока нечего сохранять]
+[System: Saved],[Система: Сохранено]
+⚠️ Model switch: {message},⚠️ Смена модели: {message}
+Switching model…,Переключаем модель…
+Closing application…,Закрываем приложение…
+Stopping chat tasks…,Останавливаем задачи чата…
+Stopping perception…,Отключаем восприятие…
+Stopping speech…,Останавливаем озвучку…
+Stopping services…,Останавливаем сервисы…
+"Qwen Image Edit ready: main photo required, second optional for composition; then describe the edit.","Qwen Image Edit готов: основное фото (обязательно), второе — по желанию для композиции; затем текст правки."
+Artist mode ready 🎨,Художница готова к работе 🎨
+Camera,Камера
+{app_name} requests camera access to capture one frame for the vision model.,"{app_name} запрашивает доступ к камере, чтобы снять один кадр и передать его в vision-модель для ответа."
+Remember for this chat,Запомнить для этого чата
+Allow,Разрешить
+Review the frame before sending to chat.,Проверьте кадр перед отправкой в чат.
+Confirm,Подтвердить
+Retake,Переснять
+Qt Multimedia unavailable on this system.,Qt Multimedia недоступен на этой системе.
+Qt Multimedia not installed,Qt Multimedia не установлен
+"Webcam not found.
+
+If console showed «No QtMultimedia backends found» — remove forced QT_MEDIA_BACKEND=gstreamer and restart Lira, or install plugins:
+  sudo apt install gstreamer1.0-plugins-good gstreamer1.0-plugins-bad
+or set before launch: QT_MEDIA_BACKEND=ffmpeg","Веб-камера не найдена.
+
+Если в консоли было «No QtMultimedia backends found» — снимите принудительный QT_MEDIA_BACKEND=gstreamer и перезапустите {app_name}, либо установите плагины:
+  sudo apt install gstreamer1.0-plugins-good gstreamer1.0-plugins-bad
+или задайте перед запуском: QT_MEDIA_BACKEND=ffmpeg"
+"Wait for preview, then «Capture frame» (Qt QImageCapture).","Дождитесь превью, затем «Снять кадр» (Qt QImageCapture)."
+"Could not open camera:
+{e}","Не удалось открыть камеру:
+{e}"
+Preview ready — press «Capture frame».,Превью готово — нажмите «Снять кадр».
+Camera not ready — wait a second…,Камера ещё не готова — подождите секунду…
+Capturing frame…,Снимаю кадр…
+Could not capture frame: {reason},Не удалось снять кадр: {reason}
+This is how {app_name} will see the frame. Confirm or retake.,Так {app_name} увидит кадр. Подтвердите или переснимите.
+Wait for preview again and press «Capture frame».,Снова дождитесь превью и нажмите «Снять кадр».
+Chat,Чат
+Return to {app_name} chat,Вернуться в чат {app_name}
+Forward,Вперёд
+Reload,Обновить
+Home (SearXNG),Домой (SearXNG)
+Page URL,Адрес страницы
+Load cancelled,Загрузка отменена
+Load aborted,Загрузка прервана
+PDF opened: {name},PDF открыт: {name}
+PDF saved: {dir}/{name},PDF сохранён: {dir}/{name}
+Image: {dir}/{name},Изображение: {dir}/{name}
+Saved: {dir}/{name},Сохранено: {dir}/{name}
+Could not load page,Не удалось загрузить страницу
+PDF: loading for preview…,PDF: загрузка для просмотра…
+Could not open PDF,Не удалось открыть PDF
+PDF is empty,PDF пустой
+PDF: write error,PDF: ошибка записи
+Connecting to SearXNG…,Подключение к SearXNG…
+Connecting…,Подключение
+For PDF vision install: pip install pymupdf,Для просмотра PDF через vision установите: pip install pymupdf
+Install PDF support: pip install pypdf,Для PDF установите зависимость: pip install pypdf
+File does not look like a valid PDF (corrupt or truncated). Try again; limit 6 MB.,Файл не похож на PDF (повреждён или обрезан при передаче). Попробуйте прикрепить снова; лимит — 6 МБ.
+Could not read PDF: {e},Не удалось прочитать PDF: {e}
+[PDF has no extractable text — may be scans only; attach pages as JPG/PNG.],"[PDF без извлекаемого текста — возможно, только сканы; прикрепите страницы как JPG/PNG.]"
+File too large (max. {mb} MB).,Файл слишком большой (макс. {mb} МБ).
+"Format «{name}» not supported. Text: .txt, .md, .csv; PDF: .pdf; images: JPG, PNG, WebP.","Формат «{name}» не поддержан. Текст: .txt, .md, .csv; PDF: .pdf; картинки: JPG, PNG, WebP."
+No text found in file «{name}».,В файле «{name}» не найден текст.
+[… document truncated by character limit …],[… документ обрезан по лимиту символов …]
+untitled,без названия
+saved image,сохраненное изображение
+saved image (alt spelling),сохранённое изображение
+Artist mode active,Режим Художницы активен
+Gallery restore error:,Ошибка восстановления галереи:
+Opening photo:,Открываем фото:
+Mute mode:,Режим без звука:
+Copy backend unavailable,Бэкенд для копирования не доступен
+Qwen load failed,ошибка загрузки Qwen Image Edit

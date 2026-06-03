@@ -1,0 +1,252 @@
+key,en
+Interface language,Interface language
+Russian,Russian
+English,English
+Model settings,Model settings
+Chat history,Chat history
+Search,Search
+Downloads,Downloads
+Gallery,Gallery
++ New chat,+ New chat
+Back,Back
+Save,Save
+Tools,Tools
+Requires attention,Requires attention
+Please wait…,Please wait…
+"Please wait, finishing the current reply…","Please wait, finishing the current reply…"
+Scanning models folder…,Scanning models folder…
+Settings saved,Settings saved
+Available LoRA,Available LoRA
+Gallery descriptions,Gallery descriptions
+Cancel,Cancel
+Capture frame,Capture frame
+Preparing…,Preparing…
+Message…,Message…
+What to draw? (prompt)…,What to draw? (prompt)…
+Exclude (negative prompt)…,Exclude (negative prompt)…
+Ready to generate…,Ready to generate…
+Creating new chat…,Creating new chat…
+New chat started,New chat started
+Delete this chat permanently?,Delete this chat permanently?
+Deleting…,Deleting…
+Enter a new title:,Enter a new title:
+No LoRA files in /models/lora/,No LoRA files in /models/lora/
+Already in prompt,Already in prompt
+What should we do with the image(s)? For two photos describe the composition (English is usually more stable)…,What should we do with the image(s)? For two photos describe the composition (English is usually more stable)…
+Main image (required),Main image (required)
+Photo,Photo
+Second image for composition (optional),Second image for composition (optional)
+Photo 2,Photo 2
+Apply edit,Apply edit
+Square 1:1,Square 1:1
+Landscape 16:9,Landscape 16:9
+Portrait 9:16,Portrait 9:16
+Apply LoRA,Apply LoRA
+Draw,Draw
+Save to dataset,Save to dataset
+Save to memory,Save to memory
+"Photo (JPG, PNG, WebP) or document (TXT, MD, PDF)","Photo (JPG, PNG, WebP) or document (TXT, MD, PDF)"
+Take a photo with the camera,Take a photo with the camera
+Task unavailable,Task unavailable
+Failed to start,Failed to start
+Start error,Start error
+Task is not available for this model,Task is not available for this model
+Not implemented,Not implemented
+Failed to start description refresh,Failed to start description refresh
+File {name} is too large. Max 6 MB.,File {name} is too large. Max 6 MB.
+Could not start document upload.,Could not start document upload.
+Documents are not supported in this build.,Documents are not supported in this build.
+"File {name}: only JPG, PNG, WebP or TXT/MD/PDF.","File {name}: only JPG, PNG, WebP or TXT/MD/PDF."
+"File {name} is not supported. Only JPG, PNG and WebP.","File {name} is not supported. Only JPG, PNG and WebP."
+document,document
+Attach the main image first (Photo button). Second is optional.,Attach the main image first (Photo button). Second is optional.
+Editing image…,Editing image…
+Painting your masterpiece…,Painting your masterpiece…
+Canvas cleared. Attach a new photo and describe the edit.,Canvas cleared. Attach a new photo and describe the edit.
+Canvas cleared. Ready for new ideas! 🎨,Canvas cleared. Ready for new ideas! 🎨
+Opening folder is unavailable,Opening folder is unavailable
+Could not open downloads folder,Could not open downloads folder
+Error opening folder,Error opening folder
+Loading…,Loading…
+Copy prompt,Copy prompt
+Save description,Save description
+Description for search,Description for search
+Briefly: what is in the image…,Briefly: what is in the image…
+Description saved,Description saved
+Could not save description,Could not save description
+Save failed,Save failed
+Prompt is empty,Prompt is empty
+Prompt copied,Prompt copied
+Attachments are only available in chat with a multimodal model,Attachments are only available in chat with a multimodal model
+No file path,No file path
+Image attached to message,Image attached to message
+Could not attach image,Could not attach image
+Gallery is empty for now,Gallery is empty for now
+Delete this artwork?,Delete this artwork?
+Attach to message for analysis,Attach to message for analysis
+All works,All works
+Newest first,Newest first
+Oldest first,Oldest first
+{count} images,{count} images
+Preparing… releasing GPU and starting description,Preparing… releasing GPU and starting description
+Done: {done} of {total},Done: {done} of {total}
+Descriptions saved: {saved} of {total},Descriptions saved: {saved} of {total}
+. Still without description: {missing},. Still without description: {missing}
+Model returned no description text — see logs/lira.log,Model returned no description text — see logs/lira.log
+Cancelled: {done} of {total},Cancelled: {done} of {total}
+Processed {done} of {total}…,Processed {done} of {total}…
+File: {name},File: {name}
+Retry for {count} with English prefix / tags ({done}/{total})…,Retry for {count} with English prefix / tags ({done}/{total})…
+Regenerating descriptions,Regenerating descriptions
+{total} total: releasing GPU for batch description…,{total} total: releasing GPU for batch description…
+Chat paused for now; faster than CPU,Chat paused for now; faster than CPU
+Processed {done} of {total}: loading chat model again…,Processed {done} of {total}: loading chat model again…
+"— GPU, separate process","— GPU, separate process"
+— background process,— background process
+{total} to describe{suffix},{total} to describe{suffix}
+Batch description on GPU starting soon…,Batch description on GPU starting soon…
+{missing} gallery image(s) without description. Open Tools on the left and tap Add descriptions.,{missing} gallery image(s) without description. Open Tools on the left and tap Add descriptions.
+LoRA {name} added,LoRA {name} added
+GPU layers (n_gpu_layers):,GPU layers (n_gpu_layers):
+"−1 = all layers on GPU. Fewer layers use CPU, less VRAM, slower. Reload model after change.","−1 = all layers on GPU. Fewer layers use CPU, less VRAM, slower. Reload model after change."
+History budget (tokens):,History budget (tokens):
+Hardware cap at n_ctx={nCtx}: ~{hwCap} (reserve for reply + template).,Hardware cap at n_ctx={nCtx}: ~{hwCap} (reserve for reply + template).
+Volume:,Volume:
+text_encoder on GPU (OOM risk),text_encoder on GPU (OOM risk)
+Add descriptions,Add descriptions
+Generate descriptions for frames without description,Generate descriptions for frames without description
+Fix descriptions,Fix descriptions
+Regenerate broken or empty descriptions,Regenerate broken or empty descriptions
+Thinking…,Thinking…
+Reacting to event…,Reacting to event…
+Preparing reply…,Preparing reply…
+Searching gallery…,Searching gallery…
+Camera…,Camera…
+Searching chat history…,Searching chat history…
+Searching the web…,Searching the web…
+Reading saved results…,Reading saved results…
+Opening link…,Opening link…
+Processing request…,Processing request…
+Telegram…,Telegram…
+{app_name} is already running,{app_name} is already running
+Two instances cannot run on the same GPU.,Two instances cannot run on the same GPU.
+Startup error,Startup error
+"Initializing {app_name}…
+Loading model into CUDA","Initializing {app_name}…
+Loading model into CUDA"
+"[Lira] Full session log (print, stderr, uncaught exceptions):
+  {path}","[Lira] Full session log (print, stderr, uncaught exceptions):
+  {path}"
+"[Lira] Qwen Image Edit log (load/edit stages, append):
+  {path}","[Lira] Qwen Image Edit log (load/edit stages, append):
+  {path}"
+New chat,New chat
+User,User
+Model file not found: {path},Model file not found: {path}
+Qwen load interrupted,Qwen load interrupted
+Gallery description refresh already running.,Gallery description refresh already running.
+Wait for the chat reply to finish.,Wait for the chat reply to finish.
+Wait for image generation to finish.,Wait for image generation to finish.
+No empty or broken descriptions to fix.,No empty or broken descriptions to fix.
+All images already have descriptions.,All images already have descriptions.
+A multimodal vision model must be loaded (clip) — switch model in chat.,A multimodal vision model must be loaded (clip) — switch model in chat.
+Gallery descriptions aborted: {message},Gallery descriptions aborted: {message}
+Descriptions done but could not restore chat model: {message}. Restart {app_name} or switch model in the menu.,Descriptions done but could not restore chat model: {message}. Restart {app_name} or switch model in the menu.
+Image file not found.,Image file not found.
+Image too large (max. {mb} MB).,Image too large (max. {mb} MB).
+Could not attach image.,Could not attach image.
+Document upload not found (session reset).,Document upload not found (session reset).
+File incomplete ({got} of {expected} bytes). Try again.,File incomplete ({got} of {expected} bytes). Try again.
+File decode error: {e},File decode error: {e}
+ p.{page}, p.{page}
+PDF not converted to images for vision. In Lira2 venv run: pip install pymupdf,PDF not converted to images for vision. In Lira2 venv run: pip install pymupdf
+🖼 {pages} PDF pages → vision,🖼 {pages} PDF pages → vision
+🖼 {pages} PDF pages,🖼 {pages} PDF pages
+Wait for gallery description refresh to finish.,Wait for gallery description refresh to finish.
+Wait for the proactive notification to finish.,Wait for the proactive notification to finish.
+"📎 Attach the main image (Photo button), then describe the edit in text.","📎 Attach the main image (Photo button), then describe the edit in text."
+Accepted Telegram message. Replying without tools — send again if you need more.,Accepted Telegram message. Replying without tools — send again if you need more.
+Noticed a Telegram message.,Noticed a Telegram message.
+⏳ Wait for the current generation or edit to finish.,⏳ Wait for the current generation or edit to finish.
+⚠️ An error occurred: {message},⚠️ An error occurred: {message}
+❌ Error: model returned no image.,❌ Error: model returned no image.
+❌ Model not loaded yet.,❌ Model not loaded yet.
+[Nothing to save to memory yet],[Nothing to save to memory yet]
+[System: Marked for memory],[System: Marked for memory]
+[No history entry for this pair],[No history entry for this pair]
+[Nothing to save yet],[Nothing to save yet]
+[System: Saved],[System: Saved]
+⚠️ Model switch: {message},⚠️ Model switch: {message}
+Switching model…,Switching model…
+Closing application…,Closing application…
+Stopping chat tasks…,Stopping chat tasks…
+Stopping perception…,Stopping perception…
+Stopping speech…,Stopping speech…
+Stopping services…,Stopping services…
+"Qwen Image Edit ready: main photo required, second optional for composition; then describe the edit.","Qwen Image Edit ready: main photo required, second optional for composition; then describe the edit."
+Artist mode ready 🎨,Artist mode ready 🎨
+Camera,Camera
+{app_name} requests camera access to capture one frame for the vision model.,{app_name} requests camera access to capture one frame for the vision model.
+Remember for this chat,Remember for this chat
+Allow,Allow
+Review the frame before sending to chat.,Review the frame before sending to chat.
+Confirm,Confirm
+Retake,Retake
+Qt Multimedia unavailable on this system.,Qt Multimedia unavailable on this system.
+Qt Multimedia not installed,Qt Multimedia not installed
+"Webcam not found.
+
+If console showed «No QtMultimedia backends found» — remove forced QT_MEDIA_BACKEND=gstreamer and restart {app_name}, or install plugins:
+  sudo apt install gstreamer1.0-plugins-good gstreamer1.0-plugins-bad
+or set before launch: QT_MEDIA_BACKEND=ffmpeg","Webcam not found.
+
+If console showed «No QtMultimedia backends found» — remove forced QT_MEDIA_BACKEND=gstreamer and restart {app_name}, or install plugins:
+  sudo apt install gstreamer1.0-plugins-good gstreamer1.0-plugins-bad
+or set before launch: QT_MEDIA_BACKEND=ffmpeg"
+"Wait for preview, then «Capture frame» (Qt QImageCapture).","Wait for preview, then «Capture frame» (Qt QImageCapture)."
+"Could not open camera:
+{e}","Could not open camera:
+{e}"
+Preview ready — press «Capture frame».,Preview ready — press «Capture frame».
+Camera not ready — wait a second…,Camera not ready — wait a second…
+Capturing frame…,Capturing frame…
+Could not capture frame: {reason},Could not capture frame: {reason}
+This is how {app_name} will see the frame. Confirm or retake.,This is how {app_name} will see the frame. Confirm or retake.
+Wait for preview again and press «Capture frame».,Wait for preview again and press «Capture frame».
+Chat,Chat
+Return to {app_name} chat,Return to {app_name} chat
+Forward,Forward
+Reload,Reload
+Home (SearXNG),Home (SearXNG)
+Page URL,Page URL
+Load cancelled,Load cancelled
+Load aborted,Load aborted
+PDF opened: {name},PDF opened: {name}
+PDF saved: {dir}/{name},PDF saved: {dir}/{name}
+Image: {dir}/{name},Image: {dir}/{name}
+Saved: {dir}/{name},Saved: {dir}/{name}
+Could not load page,Could not load page
+PDF: loading for preview…,PDF: loading for preview…
+Could not open PDF,Could not open PDF
+PDF is empty,PDF is empty
+PDF: write error,PDF: write error
+Connecting to SearXNG…,Connecting to SearXNG…
+Connecting…,Connecting…
+For PDF vision install: pip install pymupdf,For PDF vision install: pip install pymupdf
+Install PDF support: pip install pypdf,Install PDF support: pip install pypdf
+File does not look like a valid PDF (corrupt or truncated). Try again; limit 6 MB.,File does not look like a valid PDF (corrupt or truncated). Try again; limit 6 MB.
+Could not read PDF: {e},Could not read PDF: {e}
+[PDF has no extractable text — may be scans only; attach pages as JPG/PNG.],[PDF has no extractable text — may be scans only; attach pages as JPG/PNG.]
+File too large (max. {mb} MB).,File too large (max. {mb} MB).
+"Format «{name}» not supported. Text: .txt, .md, .csv; PDF: .pdf; images: JPG, PNG, WebP.","Format «{name}» not supported. Text: .txt, .md, .csv; PDF: .pdf; images: JPG, PNG, WebP."
+No text found in file «{name}».,No text found in file «{name}».
+[… document truncated by character limit …],[… document truncated by character limit …]
+untitled,untitled
+saved image,saved image
+saved image (alt spelling),saved image (alt spelling)
+Artist mode active,Artist mode active
+Gallery restore error:,Gallery restore error:
+Opening photo:,Opening photo:
+Mute mode:,Mute mode:
+Copy backend unavailable,Copy backend unavailable
+Qwen load failed,Qwen load failed

@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=Lira AI
+Comment=Personal assistant Lira
+# Replace INSTALL_ROOT with your clone path (e.g. /home/you/LiraAi)
+Exec=INSTALL_ROOT/scripts/lira_start.sh
+Path=INSTALL_ROOT
+Icon=INSTALL_ROOT/data/icon.png
+Terminal=false
+Type=Application
+Categories=Utility;Application;
+StartupWMClass=LiraAI

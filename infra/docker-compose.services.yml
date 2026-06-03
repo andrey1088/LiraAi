@@ -1,0 +1,26 @@
+services:
+  searxng:
+    image: searxng/searxng:latest
+    container_name: lira-searxng
+    ports:
+      - "127.0.0.1:8080:8080"
+    restart: unless-stopped
+    environment:
+      - BASE_URL=http://127.0.0.1:8080/
+      - INSTANCE_NAME=Lira SearXNG
+    volumes:
+      - ./searxng/settings.yml:/etc/searxng/settings.yml:ro
+
+  searxng_ru:
+    image: searxng/searxng:latest
+    container_name: lira-searxng-ru
+    ports:
+      - "127.0.0.1:8081:8080"
+    restart: unless-stopped
+    env_file:
+      - ../.env
+    environment:
+      - BASE_URL=http://127.0.0.1:8081/
+      - INSTANCE_NAME=Lira SearXNG RU
+    volumes:
+      - ./searxng/settings.yml:/etc/searxng/settings.yml:ro

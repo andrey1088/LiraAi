@@ -1,0 +1,20 @@
+{
+    "global_cooldown_sec": 90,
+    "proactive_max_tokens": 280,
+    "proactive_allow_tools": false,
+    "telegram_dispatch": "immediate_reply",
+    "perception_eval_tick_sec": 5,
+    "rules": [
+        {
+            "id": "telegram_incoming",
+            "enabled": true,
+            "match": {
+                "source": "telegram",
+                "key": "telegram.last_message"
+            },
+            "action": "proactive_chat",
+            "cooldown_sec": 120,
+            "exclude_text_prefixes": ["/"]
+        }
+    ]
+}
