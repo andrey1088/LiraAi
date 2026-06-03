@@ -26,9 +26,6 @@ chmod +x scripts/install-deps.sh scripts/smoke_imports.sh
 # Уже есть venv с llama-cpp-python? Пропустить пересборку:
 # LIRA_SKIP_LLAMA=1 ./scripts/install-deps.sh
 
-# Опционально: diffusers для Qwen Image Edit (слот image-edit)
-# LIRA_INSTALL_OPTIONAL=1 ./scripts/install-deps.sh
-
 # 2. Конфиг и имя владельца ({user_name} в промптах)
 ./scripts/setup.sh
 
@@ -61,7 +58,8 @@ cp .env.example .env
 | `LIRA_VENV` | Путь к venv (по умолчанию `$LIRA_ROOT/venv`) |
 | `LIRA_CONFIG` | Путь к `config.json` (по умолчанию `$LIRA_ROOT/config.json`) |
 | `LIRA_SKIP_LLAMA` | `1` — не ставить/пересобирать llama-cpp-python |
-| `LIRA_INSTALL_OPTIONAL` | `1` — `requirements-optional.txt` |
+| `LIRA_INSTALL_OPTIONAL` | `1` — diffusers на CPU-only (иначе при NVIDIA ставится автоматически) |
+| `LIRA_INSTALL_QWEN_CPU` | `1` — не ставить diffusers (слот image-edit недоступен) |
 | `LIRA_INSTALL_DEV` | `1` — ruff, pytest |
 | `LIRA_INSTALL_SD_CPU` | `1` — не пересобирать stable-diffusion-cpp с CUDA (машина без GPU) |
 
@@ -98,9 +96,9 @@ gio launch ~/.local/share/applications/lira.desktop
 
 ## Другой каталог на том же ПК (уже прогоняли)
 
-Если нужно снова проверить пути `LIRA_ROOT` — достаточно клона в другой папке и `./scripts/lira_start.sh` (без повторного полного `install-deps`, если venv общий или скопирован). Обязательный второй прогон для релиза **не нужен** — см. [RELEASE_PLAN.md](RELEASE_PLAN.md) § 4.1.1.
+Если нужно снова проверить пути `LIRA_ROOT` — достаточно клона в другой папке и `./scripts/lira_start.sh` (без повторного полного `install-deps`, если venv общий или скопирован).
 
-Другая машина без NVIDIA: установка возможна на CPU / Intel GPU, но чат и vision будут медленными; это не часть чеклиста релиза.
+Другая машина без NVIDIA: установка возможна на CPU / Intel GPU, но чат и vision будут медленными.
 
 ## Файлы зависимостей
 
@@ -108,7 +106,7 @@ gio launch ~/.local/share/applications/lira.desktop
 |------|------------|
 | [requirements.txt](../requirements.txt) | GUI, tools, RAG, PDF, sqlite-vec, stable-diffusion-cpp |
 | [requirements-llama.txt](../requirements-llama.txt) | Закреплённый git-коммит llama-cpp-python |
-| [requirements-optional.txt](../requirements-optional.txt) | Qwen Image Edit (по желанию) |
+| [requirements-optional.txt](../requirements-optional.txt) | Qwen Image Edit (diffusers, при NVIDIA — автоматически) |
 | [requirements-dev.txt](../requirements-dev.txt) | ruff, pytest |
 
 **PyTorch** — `install-deps.sh` сначала смотрит **CUDA Version** в `nvidia-smi`, иначе версию **nvcc**, и выбирает wheel (`cu128`, `cu126`, `cu124`, … или `cpu`). Принудительно: `LIRA_TORCH_CUDA=cu128 ./scripts/install-deps.sh`.

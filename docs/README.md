@@ -1,6 +1,6 @@
 # Документация Lira
 
-Локальный GUI-ассистент (llama.cpp, vision, tools, память). Публичная витрина — [README](../Readme.md) в корне (будет переработан перед релизом).
+Локальный GUI-ассистент (llama.cpp, vision, tools, память). Обзор проекта — [README](../README.md) в корне.
 
 ## Содержание
 
@@ -39,11 +39,3 @@
 | Документ | О чём |
 |----------|--------|
 | [architecture.md](architecture.md) | Слои кода, поток сообщения |
-
-См. также [RELEASE_PLAN.md](RELEASE_PLAN.md) — план подготовки к GitHub (LiraAi).
-
-## Статус
-
-**Фаза 4.1 (установка):** закрыта (2026-06-02). Дальше — два `master` (Lira2 + `~/LiraAi`), export **A**/**B** (фаза 4.2), см. [RELEASE_PLAN.md](RELEASE_PLAN.md).
-
-Публичный README — фазы 5–8 в [RELEASE_PLAN.md](RELEASE_PLAN.md).

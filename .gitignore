@@ -22,6 +22,9 @@ env/
 # --- Local config (не в public export / git) ---
 config.json
 .env
+docs/RELEASE_PLAN.md
+Project-notes.md
+todo.md
 
 # --- IDE/editor ---
 .idea/
@@ -42,7 +45,8 @@ unsloth_compiled_cache/
 
 # --- App runtime data (heavy/local only) ---
 data/db/
-data/media/
+data/media/*
+!data/media/splash.png
 data/memory/
 data/models/*
 !data/models/gemma-4-26b/
@@ -60,9 +64,12 @@ data/personas/*
 !data/personas/_template/**
 .env
 
-# --- Tuning: кэш и промежуточные чанки ---
-tuning/generated/
-tuning/.expand_cache.json
-tuning/pod_transfer/
-tuning/*.b64
-tuning/fixtures/
+# --- Tuning (local only, not in release) ---
+tuning/
+
+# --- Slot icons: only defaults in git ---
+data/icons/*
+!data/icons/lira.png
+!data/icons/user.png
+!data/icons/limbic/
+!data/icons/limbic/**

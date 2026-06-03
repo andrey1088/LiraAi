@@ -8,18 +8,18 @@ PYTHON="${PYTHON:-python3}"
 PY="$VENV/bin/python3"
 
 if [[ ! -d "$VENV" ]]; then
-  echo "Создаю виртуальное окружение: $VENV"
+  echo "Creating virtual environment: $VENV"
   "$PYTHON" -m venv "$VENV"
   NEW_VENV=1
 fi
 
 if [[ "${NEW_VENV:-}" == "1" ]] || ! "$PY" -c "import PyQt6" 2>/dev/null; then
   if [[ "${LIRA_START_SKIP_INSTALL:-}" == "1" ]]; then
-    echo "В venv нет зависимостей. Установите:" >&2
+    echo "Dependencies missing in venv. Run:" >&2
     echo "  $ROOT/scripts/install-deps.sh" >&2
     exit 1
   fi
-  echo "Первый запуск: устанавливаю зависимости…"
+  echo "First run: installing dependencies…"
   LIRA_VENV="$VENV" "$ROOT/scripts/install-deps.sh"
 fi
 

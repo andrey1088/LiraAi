@@ -1,5 +1,7 @@
-# Опционально: тяжёлые image-бэкенды.
-# Художница (SD): CUDA — install-deps.sh при NVIDIA; см. docs/image-generation.md
-# Qwen Image Edit: pip install git+https://github.com/huggingface/diffusers.git@...
+# Qwen Image Edit — ставится install-deps.sh при NVIDIA (см. ensure_diffusers).
+# Вручную: LIRA_INSTALL_OPTIONAL=1 ./scripts/install-deps.sh
+# stable-diffusion-cpp-python — в requirements.txt (CUDA: install-deps.sh)
 
-# stable-diffusion-cpp-python ставится из requirements.txt (базовый pip wheel может быть CPU-only)
+diffusers @ git+https://github.com/huggingface/diffusers.git@8f14cdefc5b465f21acf5b4fa3e0c07f7bf2d982
+gguf>=0.18.0
+accelerate>=1.13.0

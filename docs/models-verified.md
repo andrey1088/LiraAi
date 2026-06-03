@@ -16,7 +16,7 @@
 | Модель | Статус |
 |--------|--------|
 | Qwen3-VL-30B-A3B | слот 3, тяжёлый, не prod |
-| Qwen3.5 hybrid, Pixtral, InternVL3 8B | см. заметки в корневом [Readme.md](../Readme.md) |
+| Qwen3.5 hybrid, Pixtral, InternVL3 8B | см. [Project-notes.md](../Project-notes.md) |
 
 ## Python-стек (эталон, 2026-06)
 

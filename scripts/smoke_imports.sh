@@ -10,6 +10,7 @@ export LIRA_ROOT="$ROOT"
 
 "$PY" <<'PY'
 import os
+import subprocess
 import sys
 from pathlib import Path
 
@@ -57,12 +58,25 @@ if "stable_diffusion_cpp" not in failed:
         print("  ok  stable_diffusion_cpp (CUDA)")
     elif subprocess.run(["nvidia-smi"], capture_output=True, timeout=5).returncode == 0:
         print(
-            "  FAIL stable_diffusion_cpp: CPU-only при NVIDIA — ./scripts/install-deps.sh",
+            "  FAIL stable_diffusion_cpp: CPU-only with NVIDIA — run ./scripts/install-deps.sh",
             file=sys.stderr,
         )
         failed.append("stable_diffusion_cpp.cuda")
     else:
-        print("  ok  stable_diffusion_cpp (CPU, GPU нет)")
+        print("  ok  stable_diffusion_cpp (CPU, no GPU)")
+
+if subprocess.run(["nvidia-smi"], capture_output=True, timeout=5).returncode == 0:
+    try:
+        from diffusers import QwenImageEditPlusPipeline  # noqa: F401
+
+        print("  ok  diffusers (Qwen Image Edit)")
+    except Exception as e:
+        print(
+            "  FAIL diffusers: required for image-edit slot — run ./scripts/install-deps.sh",
+            file=sys.stderr,
+        )
+        print(f"         {e}", file=sys.stderr)
+        failed.append("diffusers")
 
 if failed:
     print(f"\nSmoke FAILED: {', '.join(failed)}", file=sys.stderr)
