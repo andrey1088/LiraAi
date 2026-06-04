@@ -51,8 +51,14 @@
                 "steps": 30,
                 "cfg_scale": 7.0,
                 "clipSkip": 2,
-                "width": 512,
-                "height": 512,
+                "width": 768,
+                "height": 768,
+                "sd_aspect_sizes": {
+                    "1:1": [768, 768],
+                    "16:9": [1024, 576],
+                    "9:16": [576, 1024]
+                },
+                "keep_vae_on_cpu": true,
                 "negative_prompt": "lowres, worst quality, low quality, bad anatomy, blurry",
                 "positive_prefix": "masterpiece, best quality"
             }
