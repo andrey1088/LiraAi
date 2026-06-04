@@ -11,7 +11,7 @@
 
 ## Где задаётся
 
-В `config.json` у слота: `"template_path": "~/Lira2/data/models/.../chat_template.jinja"`.
+В `config.json` у слота: `"template_path": "~/Lira/data/models/.../chat_template.jinja"` (или под ваш `$LIRA_ROOT`).
 
 Тексты персоны и инструкции — **не** в jinja, а в [personas.md](personas.md).  
 Класс модели и handler: [models.md](models.md).

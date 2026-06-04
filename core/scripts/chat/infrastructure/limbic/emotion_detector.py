@@ -12,7 +12,7 @@ Model files (place under data/models/rubert-tiny2-russian-emotion-detection/):
 
 Download with:
   huggingface-cli download Aniemore/rubert-tiny2-russian-emotion-detection \\
-    --local-dir ~/Lira2/data/models/rubert-tiny2-russian-emotion-detection
+    --local-dir $LIRA_ROOT/data/models/rubert-tiny2-russian-emotion-detection
 """
 
 from __future__ import annotations

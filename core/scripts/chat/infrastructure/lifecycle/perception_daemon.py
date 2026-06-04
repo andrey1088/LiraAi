@@ -399,7 +399,7 @@ class PerceptionDaemon:
         cfg = load_telegram_config()
         if not cfg.is_runnable:
             if cfg.enabled and not cfg.bot_token:
-                _log("telegram: no token (set TELEGRAM_BOT_TOKEN in ~/Lira2/.env)")
+                _log("telegram: no token (set TELEGRAM_BOT_TOKEN in $LIRA_ROOT/.env)")
             return
         if cfg.allowed_user_ids_misconfigured:
             _log(

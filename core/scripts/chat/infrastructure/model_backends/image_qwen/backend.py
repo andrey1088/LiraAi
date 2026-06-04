@@ -9,7 +9,7 @@ and CUDA must live on the same thread as pipe(), else TypeError (NoneType → C+
 On ~16GB VRAM placement=model_offload defaults to enable_model_cpu_offload();
 full pipe.to("cuda") OOMs — only with placement=full_gpu or skip_accelerate_offload.
 
-Logs: ~/Lira2/logs/qwen_image_edit.log (append) and ~/Lira2/logs/lira.log on gui start.
+Logs: $LIRA_ROOT/logs/qwen_image_edit.log (append) and lira.log on GUI start.
 
 Default text_encoder_encode_on_cpu: drop accelerate hooks on text_encoder and encode on CPU
 so Qwen2.5-VL is not fully on GPU next to GGUF (OOM on ~16GB).

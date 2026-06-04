@@ -1,5 +1,5 @@
 """
-Application diagnostic log: ~/Lira2/logs/lira.log is cleared on startup.
+Application diagnostic log: $LIRA_ROOT/logs/lira.log is cleared on startup.
 stdout and stderr are tee'd into this file — all print() and typical logging output land here.
 """
 

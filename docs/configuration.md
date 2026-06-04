@@ -1,6 +1,6 @@
 # Конфигурация
 
-Файл: `~/Lira2/config.json` (локальный, в git не коммитить с личными данными).
+Файл: **`$LIRA_CONFIG`** (по умолчанию `$LIRA_ROOT/config.json`, часто `~/Lira/config.json` после клона). Локальный, в git не коммитить.
 
 ## Корневые поля
 
@@ -17,7 +17,7 @@
 ```json
 "tts": {
   "locale": "ru",
-  "model_path": "~/Lira2/data/models/v5_5_ru.pt",
+  "model_path": "~/Lira/data/models/v5_5_ru.pt",
   "speaker": "kseniya",
   "sample_rate": 48000,
   "en_speaker": "en_21"
@@ -28,7 +28,7 @@
 
 ## Локализация интерфейса
 
-Переводы UI: [`infrastructure/locale/ui/en.csv`](../core/scripts/chat/infrastructure/locale/ui/en.csv) и [`ru.csv`](../core/scripts/chat/infrastructure/locale/ui/ru.csv). **В коде пишете английский текст** (как msgid в gettext); в `ru.csv` колонка `key` — тот же английский, `ru` — перевод.
+Переводы UI: [`core/scripts/chat/infrastructure/locale/ui/`](../core/scripts/chat/infrastructure/locale/ui/) (`en.csv`, `ru.csv`). В тексте ниже «`locale/…`» — то же дерево относительно `core/scripts/chat/infrastructure/`. **В коде пишете английский текст** (как msgid в gettext); в `ru.csv` колонка `key` — тот же английский, `ru` — перевод.
 
 **Добавить перевод UI:**
 
@@ -95,7 +95,7 @@
 | `model_type` | тип для выбора handler |
 | `model_path`, `clip_model_path` | GGUF / mmproj |
 | `template_path` | jinja chat template |
-| `persona_file` | `~/Lira2/data/personas/…json` |
+| `persona_file` | `~/Lira/data/personas/…json` (или `$LIRA_ROOT/data/personas/…`) |
 | `db_path` | SQLite памяти |
 | `settings` | `temperature`, `n_ctx`, `n_gpu_layers`, … |
 
