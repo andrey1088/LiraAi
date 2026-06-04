@@ -99,6 +99,16 @@
 | `db_path` | SQLite памяти |
 | `settings` | `temperature`, `n_ctx`, `n_gpu_layers`, … |
 
+### Слот `text-to-image` (`settings`)
+
+| Поле | Назначение |
+|------|------------|
+| `steps`, `cfg_scale`, `clipSkip` | сэмплинг stable-diffusion.cpp |
+| `width`, `height` | квадрат по умолчанию; база, если в `sd_aspect_sizes` нет `"1:1"` |
+| `sd_aspect_sizes` | размеры под UI **1:1**, **16:9**, **9:16**: `"16:9": [1024, 576]` и т.д. |
+| `positive_prefix`, `negative_prompt` | префиксы промпта |
+| `sd_offload_to_cpu`, `keep_vae_on_cpu`, … | VRAM, см. [image-generation.md](image-generation.md) |
+
 При первом обращении к модели создаются `persona_file` и `db_path`, если не заданы.
 
 Шаблон без личных данных: `config.example.json` (в git) — **три слота** (text/multimodal, `text-to-image`, `image-edit`), заглушки путей к весам, без `persona_file` / `db_path` (создаются при первом использовании). Локальный `config.json` — не коммитить; дополнительные слоты — копией и правкой id.

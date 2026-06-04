@@ -49,7 +49,7 @@ def main() -> int:
     root = lira_root()
     cfg_path = config_path()
     if not cfg_path.is_file():
-        print(f"Нет файла: {cfg_path}", file=sys.stderr)
+print(f"Config file not found: {cfg_path}", file=sys.stderr)
         return 1
 
     data = json.loads(cfg_path.read_text(encoding="utf-8"))
@@ -58,11 +58,11 @@ def main() -> int:
 
     cfg_path.write_text(json.dumps(out, ensure_ascii=False, indent=4) + "\n", encoding="utf-8")
     if changed:
-        print(f"Пути обновлены в {cfg_path}")
+        print(f"Paths updated in {cfg_path}")
     else:
-        print(f"Изменений нет (уже соответствует {root})")
-    print(f"Корень установки: {root}")
-    print(f"Пример model_path: {out.get('models', [{}])[0].get('model_path', '—') if out.get('models') else '—'}")
+        print(f"No changes (already matches {root})")
+    print(f"Install root: {root}")
+    print(f"Example model_path: {out.get('models', [{}])[0].get('model_path', '—') if out.get('models') else '—'}")
     return 0
 
 

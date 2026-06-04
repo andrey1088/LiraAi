@@ -23,6 +23,15 @@ class AIModel:
     perception_daemon: bool = False
     settings: Dict[str, Any] = field(default_factory=dict)
 
+    @staticmethod
+    def _normalize_settings(data: Dict[str, Any]) -> Dict[str, Any]:
+        settings = dict(data.get("settings") or {})
+        # sd_aspect_sizes must live under settings; tolerate top-level in config.json
+        top_aspects = data.get("sd_aspect_sizes")
+        if isinstance(top_aspects, dict) and "sd_aspect_sizes" not in settings:
+            settings["sd_aspect_sizes"] = top_aspects
+        return settings
+
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> "AIModel":
         """Build entity from configuration dict."""
@@ -40,7 +49,7 @@ class AIModel:
             db_path=data.get("db_path"),
             lora_path=data.get("lora_path"),
             clip_model_path=data.get("clip_model_path"),
-            settings=data.get("settings", {}),
+            settings=cls._normalize_settings(data),
             template_path=data.get("template_path"),
             limbic_images_path=data.get("limbic_images_path"),
             perception_daemon=bool(data.get("perception_daemon", False)),
