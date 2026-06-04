@@ -12,7 +12,7 @@ def qwen_diag_log_path() -> str:
 
 
 def qwen_diag_append(msg: str) -> None:
-    """Append line to ~/Lira2/logs/qwen_image_edit.log."""
+    """Append line to $LIRA_ROOT/logs/qwen_image_edit.log."""
     line = f"[{datetime.now().isoformat(timespec='seconds')}] {msg}\n"
     try:
         with open(qwen_image_edit_log_path(), "a", encoding="utf-8") as f:

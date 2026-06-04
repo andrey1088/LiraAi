@@ -56,7 +56,7 @@ flowchart LR
 
 ```json
 "perception_daemon": true,
-"limbic_images_path": "~/Lira2/data/models/…/limbic"
+"limbic_images_path": "~/Lira/data/models/…/limbic"
 ```
 
 Без limbic-каталога daemon для модели **не** активируется (`model_perception_daemon_enabled`).

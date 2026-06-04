@@ -66,15 +66,28 @@ cp .env.example .env   # по желанию: Telegram, SearXNG, HTTP_PROXY
 
 Подробно: [docs/getting-started.md](docs/getting-started.md).
 
+## Пути (клон и конфиг)
+
+| Что | Путь |
+|-----|------|
+| Каталог установки (пример) | `~/Lira` после `git clone` |
+| Корень в рантайме | **`$LIRA_ROOT`** — каталог репозитория; задаёт `scripts/lira_start.sh` или вручную |
+| Конфиг | **`$LIRA_CONFIG`** (по умолчанию `$LIRA_ROOT/config.json`, в git не коммитится) |
+| Данные и веса | `$LIRA_ROOT/data/` (`models/`, `personas/`, `memory/`, …) |
+| Логи | `$LIRA_ROOT/logs/` |
+
+В `config.json` можно писать `~/Lira/...` или пути от другого клона — при запуске из `$LIRA_ROOT` они нормализуются (`resolve_path`, `scripts/rewrite_config_paths.py`). В документации ниже **`~/Lira`** = ваш каталог клона, если не указано иное.
+
 ## Структура репозитория
 
 ```
-├── core/scripts/chat/     # GUI, ChatController, workers, tools, backends
-├── data/                  # personas, icons; models/ и *.db — локально, не в git
-├── docs/                  # документация (оглавление: docs/README.md)
-├── docs/assets/demo/      # скриншоты для README
-├── infra/                 # docker-compose для SearXNG
-├── scripts/               # install-deps, setup, lira_start
+├── core/scripts/chat/              # GUI, ChatController, workers, tools, backends
+│   └── infrastructure/locale/      # i18n: ui/, tools/, variables/ (CSV + JSON)
+├── data/                           # personas, icons; models/ и *.db — локально, не в git
+├── docs/                           # документация (оглавление: docs/README.md)
+├── docs/assets/demo/               # скриншоты для README
+├── infra/                          # docker-compose для SearXNG
+├── scripts/                        # install-deps, setup, lira_start
 ├── config.example.json
 └── requirements*.txt
 ```

@@ -18,11 +18,11 @@ DEFAULT_MODEL_DIR = str(lira_data("models", "paraphrase-multilingual-MiniLM-L12-
 class SemanticEngine:
     """
     RAG over history and memory_search (384-d MiniLM).
-    Files: ~/Lira2/data/models/paraphrase-multilingual-MiniLM-L12-v2/
+    Files: $LIRA_ROOT/data/models/paraphrase-multilingual-MiniLM-L12-v2/
 
     Download if missing:
       huggingface-cli download sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2 \\
-        --local-dir ~/Lira2/data/models/paraphrase-multilingual-MiniLM-L12-v2
+        --local-dir $LIRA_ROOT/data/models/paraphrase-multilingual-MiniLM-L12-v2
     """
 
     def __init__(self, model_dir: str | None = None):

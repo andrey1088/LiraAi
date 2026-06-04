@@ -1,11 +1,11 @@
 """
 Gallery-only embedder (separate from memory_search / MiniLM).
-Model and format: ~/Lira2/config.json → gallery_search.
-After model change: python3 ~/Lira2/core/scripts/maintenance/index_gallery.py
+Model and format: $LIRA_CONFIG → gallery_search.
+After model change: python3 $LIRA_ROOT/core/scripts/maintenance/index_gallery.py
 
 Local copy (optional, like rubert for emotions):
   huggingface-cli download intfloat/multilingual-e5-small \\
-    --local-dir ~/Lira2/data/models/multilingual-e5-small
+    --local-dir $LIRA_ROOT/data/models/multilingual-e5-small
 If the directory exists — load from disk; else Hugging Face (~/.cache/huggingface/).
 """
 

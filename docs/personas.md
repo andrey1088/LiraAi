@@ -52,8 +52,9 @@
 ## Миграция persona
 
 ```bash
-~/Lira2/venv/bin/python3 ~/Lira2/scripts/migrate_persona_user_placeholders.py   # имя → {user_name}
-~/Lira2/venv/bin/python3 ~/Lira2/scripts/simplify_persona_declensions.py      # убрать {user_name_*}
+cd "$LIRA_ROOT"   # каталог клона, например ~/Lira
+./venv/bin/python3 scripts/migrate_persona_user_placeholders.py   # имя → {user_name}
+./venv/bin/python3 scripts/simplify_persona_declensions.py        # убрать {user_name_*}
 ```
 
 В Telegram-промптах: «владелец», `{user_name}` в именительном; не называть собеседника именем владельца.
