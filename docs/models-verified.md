@@ -1,22 +1,32 @@
 # Проверенные модели и стек
 
-Классы слотов и поля конфига: [models.md](models.md). Установка окружения: [getting-started.md](getting-started.md).
+Классы слотов и поля конфига: [models.md](models.md). Установка: [getting-started.md](getting-started.md).
 
-## Продакшен (автор)
+`active_model` / `active_model_id` в `config.json` — последний выбор в UI, в git не фиксируются.
 
-| Слот | Имя | Модель | Роль |
-|------|-----|--------|------|
-| 1 | Лира | Gemma-4-26B + mmproj | основной голос, tools, чат |
-| 2 | Ава | Gemma-3-12b-null-space | второй multimodal |
+## Основные (сейчас в работе)
 
-`active_model` / `active_model_id` в `config.json` — **последний выбор в UI**, в git не фиксируются.
+| Модель | Назначение |
+|--------|------------|
+| **Gemma-4-26B** + mmproj | основной чат, tools, vision (слот 1) |
+| **Gemma-3-12b-null-space** + mmproj | второй multimodal-слот |
+| **Stable Diffusion** checkpoint + LoRA | text-to-image («художница») |
+| **Qwen Image Edit** (GGUF + [Qwen/Qwen-Image-Edit-2511](https://huggingface.co/Qwen/Qwen-Image-Edit-2511)) | image-edit |
 
-## Экспериментально / не рекомендуется
+Для чата и vision в авторской установке брались **community GGUF (abliterated / uncensored)**, не vendor Instruct — поведение через persona и `config.json`.
 
-| Модель | Статус |
-|--------|--------|
-| Qwen3-VL-30B-A3B | слот 3, тяжёлый, не prod |
-| Qwen3.5 hybrid, Pixtral, InternVL3 8B | см. [Project-notes.md](../Project-notes.md) |
+## Запускались / эксперименты
+
+| Модель | Заметка |
+|--------|---------|
+| Qwen3-VL-30B-A3B-Instruct | abliterated GGUF; vision в Lira работает, текст/русский слабее Gemma 3 |
+| Qwen3.5-27B hybrid + mmproj | vision в Lira нестабилен; через `llama-mtmd-cli` — ок |
+| Qwen3.6-27B hybrid + mmproj | то же |
+| Pixtral | пробовали как кандидат multimodal |
+| InternVL3 8B | пробовали как кандидат multimodal |
+| Qwen 2.5 / text-only | не цель (нужен multimodal) |
+
+Подробные заметки по сравнению — в локальном `Project-notes.md` (не в public repo).
 
 ## Python-стек (эталон, 2026-06)
 
@@ -30,7 +40,7 @@
 | sentence-transformers | 5.3.x (MiniLM / e5 для RAG и галереи) |
 | transformers | 5.5.x (лимбика / emotion BERT) |
 
-Сборка **llama-cpp-python** вручную (если не используете git-pin из `requirements-llama.txt`):
+Сборка **llama-cpp-python** вручную:
 
 ```bash
 CMAKE_ARGS="-DGGML_CUDA=on" pip install llama-cpp-python==0.3.23

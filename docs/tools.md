@@ -42,6 +42,8 @@
 
 Отказ сервера возвращается модели текстом; она должна ответить без tool.
 
+**Прокси:** для встроенного поиска в WebEngine (режим `ru`) и для `web_fetch_url` задайте `HTTP_PROXY` в `.env` (см. `.env.example`). SearXNG поднимается локально через `infra/docker-compose.services.yml`.
+
 ## Цепочка tools
 
 - Лимит шагов: `MAX_TOOL_CHAIN_STEPS` (по умолчанию 10) в `ChatController`.

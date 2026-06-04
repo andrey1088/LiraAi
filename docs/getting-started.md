@@ -17,44 +17,41 @@
 ## Установка (репозиторий уже клонирован)
 
 ```bash
-cd ~/Lira2
+cd ~/Lira
 
-# 1. venv + pip (PyTorch CUDA, llama-cpp CUDA, SD CUDA при NVIDIA — см. install-deps.sh)
+# 1. venv + pip (PyTorch CUDA, llama-cpp CUDA, SD CUDA, diffusers on NVIDIA)
 chmod +x scripts/install-deps.sh scripts/smoke_imports.sh
 ./scripts/install-deps.sh
 
-# Уже есть venv с llama-cpp-python? Пропустить пересборку:
 # LIRA_SKIP_LLAMA=1 ./scripts/install-deps.sh
 
-# 2. Конфиг и имя владельца ({user_name} в промптах)
+# 2. config + owner name ({user_name} in prompts)
 ./scripts/setup.sh
 
-# 3. Секреты и сервисы (по желанию)
+# 3. Secrets and services (optional)
 cp .env.example .env
-# отредактируйте TELEGRAM_*, LIRA_SEARXNG_* …
+# TELEGRAM_*, LIRA_SEARXNG_*, HTTP_PROXY for search in WebEngine
 
-# 4. Веса и слоты моделей
-# Положите GGUF/mmproj в data/models/, пропишите слоты в config.json
-# или скопируйте config.example.json → config.json и заполните models[]
-# Если config скопирован со старого ~/Lira2:
-#   LIRA_ROOT="$PWD" python3 scripts/rewrite_config_paths.py
+# 4. Weights and model slots
+# Place GGUF/mmproj under data/models/, edit config.json
+# Or: cp config.example.json config.json and fill models[]
+# Paths from another clone: LIRA_ROOT="$PWD" python3 scripts/rewrite_config_paths.py
 
-# 5. Проверка импортов (без GUI и без весов)
+# 5. Import smoke (no GUI, no weights)
 ./scripts/smoke_imports.sh
 
-# 6. Запуск (при отсутствии venv создаст его и вызовет install-deps.sh)
+# 6. Launch
 ./scripts/lira_start.sh
-# только venv без pip: LIRA_START_SKIP_INSTALL=1 ./scripts/lira_start.sh
+# LIRA_START_SKIP_INSTALL=1 ./scripts/lira_start.sh
 
-# 7. Ярлык в меню приложений (Linux, опционально)
-# см. раздел «Ярлык в меню» ниже
+# 7. Desktop shortcut (optional) — see below
 ```
 
 Переменные окружения:
 
 | Переменная | Назначение |
 |------------|------------|
-| `LIRA_ROOT` | Корень клона (выставляет `lira_start.sh`; без него пути могут уехать в `~/Lira2`) |
+| `LIRA_ROOT` | Install root (`lira_start.sh`; default: repo directory) |
 | `LIRA_VENV` | Путь к venv (по умолчанию `$LIRA_ROOT/venv`) |
 | `LIRA_CONFIG` | Путь к `config.json` (по умолчанию `$LIRA_ROOT/config.json`) |
 | `LIRA_SKIP_LLAMA` | `1` — не ставить/пересобирать llama-cpp-python |
@@ -69,7 +66,7 @@ cp .env.example .env
 
 Иконка приложения: `data/icon.png` в корне репозитория (не путать с `data/icons/` — аватары слотов моделей).
 
-1. Скопируйте шаблон и подставьте путь к клону (`INSTALL_ROOT` → например `~/LiraAi`):
+1. Скопируйте шаблон и подставьте путь к клону (`INSTALL_ROOT` → например `~/Lira`):
 
 ```bash
 cd "$LIRA_ROOT"   # каталог, откуда вы запускаете Lira
@@ -92,13 +89,9 @@ update-desktop-database ~/.local/share/applications 2>/dev/null || true
 gio launch ~/.local/share/applications/lira.desktop
 ```
 
-`lira.desktop` с вашими путями в git не коммитьте (локальный файл; в репозитории только `lira.desktop.example`). `Exec` и `Path` должны вести в каталог, где лежат `scripts/lira_start.sh` и `config.json`.
+`lira.desktop` с вашими путями в git не коммитьте. `Exec` и `Path` должны указывать на каталог с `scripts/lira_start.sh` и `config.json`.
 
-## Другой каталог на том же ПК (уже прогоняли)
-
-Если нужно снова проверить пути `LIRA_ROOT` — достаточно клона в другой папке и `./scripts/lira_start.sh` (без повторного полного `install-deps`, если venv общий или скопирован).
-
-Другая машина без NVIDIA: установка возможна на CPU / Intel GPU, но чат и vision будут медленными.
+Другая машина без NVIDIA: установка на CPU возможна, но чат и vision будут медленными.
 
 ## Файлы зависимостей
 
@@ -125,21 +118,17 @@ gio launch ~/.local/share/applications/lira.desktop
 
 Шаблон конфига: [config.example.json](../config.example.json). Документация полей: [configuration.md](configuration.md).
 
-## Модели по умолчанию (автор)
+## Модели
 
-Слот **1** — Gemma-4 (Лира), **2** — Gemma-3 (Ава), **3** — экспериментальный Qwen3-VL. Таблица и версии стека: [models-verified.md](models-verified.md).
+Основные и экспериментальные GGUF, версии стека: [models-verified.md](models-verified.md). В `config.example.json` — три слота (чат / SD / image-edit).
 
-## Чеклист «у себя всё завелось»
+## Проверка после установки
 
-- [ ] `./scripts/install-deps.sh` без ошибок
-- [ ] `./scripts/smoke_imports.sh` → `Smoke OK`
-- [ ] `./scripts/setup.sh` — `user.display_name` в config
-- [ ] В `config.json` есть хотя бы один слот с существующими путями к GGUF
-- [ ] `./scripts/lira_start.sh` — окно Lira, ответ в чате на verified-модели
-- [ ] Прикрепление изображения в чат (файл или кнопка 📎 в галерее) — превью над полем ввода
-- [ ] (опционально) `data/models/paraphrase-multilingual-MiniLM-L12-v2/` — semantic / memory_search
-- [ ] (опционально) `.env` + Docker — `web_search` через SearXNG
-- [ ] (опционально) [озвучка Silero](tts.md) — `data/models/v5_5_ru.pt` или без TTS
+1. **Окружение** — `./scripts/install-deps.sh` без ошибок; `./scripts/smoke_imports.sh` → `Smoke OK`.
+2. **Конфиг** — `./scripts/setup.sh` записал `user.display_name`; в `config.json` есть слот с существующими путями к GGUF.
+3. **Запуск** — `./scripts/lira_start.sh` открывает окно; ответ в чате на модели из [основного списка](models-verified.md).
+4. **Vision** — картинка из файла или 📎 в галерее: превью над полем ввода, модель видит вложение.
+5. **Опционально** — `data/models/paraphrase-multilingual-MiniLM-L12-v2/` для semantic / `memory_search`; `.env` + Docker + SearXNG для `web_search`; Silero `v5_5_ru.pt` для TTS (без `.pt` приложение тоже стартует).
 
 ## Художница (stable-diffusion.cpp)
 
@@ -152,10 +141,9 @@ gio launch ~/.local/share/applications/lira.desktop
 ## Устранение неполадок
 
 - **`import llama_cpp` fails** — пересоберите с CUDA: `CMAKE_ARGS="-DGGML_CUDA=on" pip install -r requirements-llama.txt`
-- **Открывается «чужая» data / старый чат** — проверьте `LIRA_ROOT` (запуск через `./scripts/lira_start.sh` из нужного клона, не старый `.desktop` на `~/Lira2`)
-- **Пути в config указывают на другой каталог** — `LIRA_ROOT="$PWD" python3 scripts/rewrite_config_paths.py`
-- **Галерея есть, прикрепить в чат нельзя** — в терминале строки `[Attachment]`; частые причины: файл не найден (`resolve_path` / пути в `gallery.db`), раньше — `TypeError: not 'int'` в `lira_data` (исправлено: сегменты пути приводятся к `str`)
-- **«Файл изображения не найден» из галереи** — в БД пути вида `~/Lira2/data/...`; нужен запуск с правильным `LIRA_ROOT` или общая `data/` + `rewrite_config_paths.py`
+- **Wrong data / old chat** — check `LIRA_ROOT` (run `./scripts/lira_start.sh` from the intended clone; `.desktop` must match)
+- **Config paths point elsewhere** — `LIRA_ROOT="$PWD" python3 scripts/rewrite_config_paths.py`
+- **Gallery attach fails** — paths in `gallery.db` may reference another install; use `rewrite_config_paths.py` or correct `LIRA_ROOT`
 - **Qt WebEngine / OpenGL** — не запускайте под SSH без `DISPLAY`; на Wayland/X11 локально обычно достаточно `AA_ShareOpenGLContexts` (уже в `gui.py`)
 - **PDF в vision** — `pip install pymupdf`; только текст из PDF — достаточно `pypdf` (уже в requirements)
 - **Память с векторами** — `pip install sqlite-vec`; без расширения поиск по embedding отключён

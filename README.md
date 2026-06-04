@@ -8,6 +8,8 @@
 
 **Платформа:** Linux (эталон — Ubuntu 24.04). **GPU:** NVIDIA + CUDA рекомендуются для комфортной работы.
 
+В авторской установке для чата и vision часто использовались **community GGUF (abliterated / uncensored)** — не vendor Instruct; тон и границы задаются **persona** и `config.json`, а не RLHF вендора.
+
 ## Демо
 
 ![Интерфейс чата и настройки слота](docs/assets/demo/01-chat.webp)
@@ -21,41 +23,43 @@
 
 ## Возможности
 
-| Область | Что умеет |
-|---------|-----------|
-| **Чат** | Несколько слотов моделей, persona, сжатие контекста, tool-calling |
-| **Vision** | Картинки в сообщениях (mmproj + llama.cpp mtmd) |
-| **Память** | SQLite, семантический поиск по истории и long-term memory |
-| **Галерея** | Индексация кадров, поиск по смыслу, vision-описания |
-| **Инструменты** | Веб (SearXNG), память, камера, галерея — см. [docs/tools.md](docs/tools.md) |
-| **Limbic** | Эмоциональное состояние в промпте и UI-аватар (опционально) |
-| **TTS** | Silero (ручная установка весов) |
-| **Картинки** | Stable Diffusion (text-to-image), Qwen Image Edit (image-edit) |
-| **Интеграции** | Telegram, perception daemon (опционально) |
+Подробности — в [docs/](docs/README.md); ниже краткий список со ссылками.
 
-Шаблон конфига на **три слота**: multimodal-чат, text-to-image, image-edit — [config.example.json](config.example.json).
+- **Модели и UI** — слоты `text` / multimodal (GGUF + mmproj), `text-to-image`, `image-edit`; переключение активной модели в интерфейсе; параметры слота (temperature, `n_gpu_layers`, бюджет контекста, громкость TTS) из сайдбара. → [models.md](docs/models.md), [configuration.md](docs/configuration.md)
+- **Инструменты (tools)** — `memory_search`, `gallery_search`, `camera_capture`, `web_search`, `web_search_saved`, `web_fetch_url`; политики цепочек; **свои tools** — новый модуль + schema + регистрация в `ChatController`. Для встроенного поиска в WebEngine и `web_fetch_url` — **HTTP-прокси** через `.env` (`HTTP_PROXY`, маршрут `ru`). → [tools.md](docs/tools.md)
+- **Вложения** — изображения в чат (vision), снимок с камеры, форматы картинок; текст из **PDF** (pypdf / pymupdf). → [models.md](docs/models.md), [memory-databases.md](docs/memory-databases.md)
+- **Галерея** — просмотр сетки, копирование промпта, правка описаний; генерация через SD-слот и **LoRA**; пакетное «добавить/исправить описания»; семантический поиск (`gallery_search`). → [configuration.md](docs/configuration.md), [image-generation.md](docs/image-generation.md)
+- **Контекст** — trim и сжатие истории по токен-бюджету, чтобы длинный диалог не ронял сессию по памяти. → [configuration.md](docs/configuration.md), [architecture.md](docs/architecture.md)
+- **Память** — долговременные факты и **RAG** по истории в рамках слота; пары вопрос/ответ можно сохранить в память **по клику**; отдельно — **«Сохранить в датасет»** (`data/train_data.jsonl`) для последующего дообучения. → [memory-databases.md](docs/memory-databases.md), [personas.md](docs/personas.md)
+- **Проактивность** — фоновый perception daemon, реакция на внешние события (в примере — **Telegram**-бот и оценка, стоит ли прервать десктоп-чат). → [external-events.md](docs/external-events.md), [telegram.md](docs/telegram.md)
+- **Sens** — время, дата и состояние системы (GPU/CPU) отдельным блоком `sens` в Jinja-шаблоне, без лишних tool-вызовов. → [sens.md](docs/sens.md), [chat-templates.md](docs/chat-templates.md)
+- **Limbic** — эмоциональное состояние модели по контексту (rubert-tiny2), плавный возврат к baseline; PNG-аватар по эмоциям в UI. → [limbic.md](docs/limbic.md)
+- **TTS** — озвучка Silero (ru/en по `ui_locale`). → [tts.md](docs/tts.md)
+- **Локализация** — `ui_locale` ru/en, CSV для UI и tool-подсказок. → [i18n-ui.md](docs/i18n-ui.md)
+
+Шаблон конфига на **три слота** (чат / SD / image-edit): [config.example.json](config.example.json).
 
 ## Ограничения
 
 - **Веса сами:** GGUF, mmproj, SD-checkpoint, Silero `.pt`, embedder — в `data/models/` (десятки ГБ, не в git).
 - **Железо:** полноценный multimodal-чат рассчитан на дискретную NVIDIA; на CPU возможно, но медленно.
 - **Vision:** для части семейств (например Gemma) multimodal-стек llama.cpp может отставать от текстового режима — см. [docs/models.md](docs/models.md).
-- **ОС:** разработка и установка ориентированы на Linux; Windows/macOS не в фокусе.
+- **ОС:** Linux; Windows/macOS не в фокусе.
 - **Голосовой ввод, видеогенерация** — не реализованы.
 - **Hobby-проект:** без гарантии поддержки; [MIT](LICENSE), issues и PR — см. [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Быстрый старт
 
 ```bash
-git clone <repo-url> ~/Lira
+git clone git@github.com:andrey1088/LiraAi.git ~/Lira
 cd ~/Lira
 
 chmod +x scripts/install-deps.sh scripts/smoke_imports.sh
-./scripts/install-deps.sh          # venv, PyTorch CUDA, llama-cpp, SD, diffusers при NVIDIA
-./scripts/setup.sh                 # config.json из config.example.json
-cp .env.example .env               # по желанию: Telegram, SearXNG
+./scripts/install-deps.sh
+./scripts/setup.sh
+cp .env.example .env   # по желанию: Telegram, SearXNG, HTTP_PROXY
 
-# Положите веса в data/models/, поправьте пути в config.json
+# Веса в data/models/, пути в config.json
 ./scripts/smoke_imports.sh
 ./scripts/lira_start.sh
 ```
@@ -68,11 +72,11 @@ cp .env.example .env               # по желанию: Telegram, SearXNG
 ├── core/scripts/chat/     # GUI, ChatController, workers, tools, backends
 ├── data/                  # personas, icons; models/ и *.db — локально, не в git
 ├── docs/                  # документация (оглавление: docs/README.md)
-├── docs/assets/demo/      # скриншоты для README (см. раздел «Демо»)
-├── infra/                 # docker-compose для SearXNG и сервисов
+├── docs/assets/demo/      # скриншоты для README
+├── infra/                 # docker-compose для SearXNG
 ├── scripts/               # install-deps, setup, lira_start
-├── config.example.json    # шаблон слотов и путей
-└── requirements*.txt      # Python-зависимости
+├── config.example.json
+└── requirements*.txt
 ```
 
 ## Документация
@@ -83,29 +87,21 @@ cp .env.example .env               # по желанию: Telegram, SearXNG
 | Установка | [docs/getting-started.md](docs/getting-started.md) |
 | Конфигурация | [docs/configuration.md](docs/configuration.md) |
 | Модели и слоты | [docs/models.md](docs/models.md) |
-| Проверенный стек | [docs/models-verified.md](docs/models-verified.md) |
+| Проверенные модели | [docs/models-verified.md](docs/models-verified.md) |
 | Генерация картинок | [docs/image-generation.md](docs/image-generation.md) |
 | Архитектура | [docs/architecture.md](docs/architecture.md) |
 | Инструменты | [docs/tools.md](docs/tools.md) |
 | Память и БД | [docs/memory-databases.md](docs/memory-databases.md) |
 
-## Основные модели (слоты)
+## Модели
 
-Задаются в `config.json` → `models[]`. В репозитории только пример путей; скачивание и лицензии — на стороне пользователя.
+Слоты в `config.json` → `models[]`. Список **основных** и **экспериментальных** GGUF, версии Python-стека: [docs/models-verified.md](docs/models-verified.md).
 
-| Слот (пример) | Класс | Типичный стек |
-|---------------|-------|----------------|
-| Lira | text + vision | Gemma-4-26B + mmproj ([models-verified.md](docs/models-verified.md)) |
-| Artist | text-to-image | SD checkpoint + LoRA |
-| Image Edit | image-edit | Qwen Image Edit GGUF + [Qwen/Qwen-Image-Edit-2511](https://huggingface.co/Qwen/Qwen-Image-Edit-2511) |
+**Вспомогательные** (не LLM-слоты), в `data/models/`:
 
-## Вспомогательные модели (не LLM-слоты)
-
-Скачиваются отдельно в `data/models/`:
-
-| Назначение | Модель | Документация |
-|------------|--------|--------------|
-| RAG / `memory_search` | [paraphrase-multilingual-MiniLM-L12-v2](https://huggingface.co/sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2) | [memory-databases.md](docs/memory-databases.md) |
-| Поиск по галерее | [multilingual-e5-small](https://huggingface.co/intfloat/multilingual-e5-small) | [configuration.md](docs/configuration.md) → `gallery_search` |
-| Эмоции (limbic) | [rubert-tiny2-russian-emotion-detection](https://huggingface.co/Aniemore/rubert-tiny2-russian-emotion-detection) | [limbic.md](docs/limbic.md) |
-| TTS | [Silero v5 ru](https://github.com/snakers4/silero-models) | [docs/tts.md](docs/tts.md) |
+| Назначение | Модель |
+|------------|--------|
+| RAG / `memory_search` | [paraphrase-multilingual-MiniLM-L12-v2](https://huggingface.co/sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2) |
+| Поиск по галерее | [multilingual-e5-small](https://huggingface.co/intfloat/multilingual-e5-small) |
+| Эмоции (limbic) | [rubert-tiny2-russian-emotion-detection](https://huggingface.co/Aniemore/rubert-tiny2-russian-emotion-detection) |
+| TTS | [Silero v5 ru](https://github.com/snakers4/silero-models) |

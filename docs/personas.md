@@ -58,6 +58,4 @@
 
 В Telegram-промптах: «владелец», `{user_name}` в именительном; не называть собеседника именем владельца.
 
-Если правите persona вручную, сверяйтесь с `persona_defaults.py` и `_template/persona.json`.
-
-> **TODO:** UI для редактирования persona; выбор `locale` из настроек (фаза 1 i18n).
+Если правите persona вручную, сверяйтесь с `persona_defaults.py` и `_template/persona.json`. Редактирование persona в UI пока только через JSON на диске.
