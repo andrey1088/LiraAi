@@ -374,7 +374,8 @@ body {
 #saveBtn,
 #memoryVerifiedBtn,
 #attach-btn,
-#camera-attach-btn {
+#camera-attach-btn,
+#stt-btn {
     width: 38px;
     height: 38px;
     border-radius: 8px;
@@ -396,8 +397,17 @@ body {
 #saveBtn:hover,
 #memoryVerifiedBtn:hover,
 #attach-btn:hover,
-#camera-attach-btn:hover {
+#camera-attach-btn:hover,
+#stt-btn:hover {
     background: #4682B4;
+}
+
+#stt-btn.stt-btn--recording {
+    background: #c0392b;
+}
+
+.hidden {
+    display: none !important;
 }
 
 .chat-header {

@@ -28,6 +28,8 @@ export class LiraApp {
         this.state = new LiraState();
         this.view = new LiraView();
         this.i18n = new I18n();
+        this.state.sttRecording = false;
+        this.state.sttEnabled = false;
         this.view.hideBlockingLoader();
         this.initBridge();
 
@@ -71,8 +73,9 @@ export class LiraApp {
             return;
         }
         const raw = await this.backend.get_ui_locale();
-        const { locale } = JSON.parse(raw);
+        const { locale, stt_enabled: sttEnabled } = JSON.parse(raw);
         await this.i18n.load(locale || 'ru');
+        this.state.sttEnabled = !!sttEnabled;
         this.i18n.applyDom();
     }
 
@@ -83,6 +86,7 @@ export class LiraApp {
         const { locale: saved } = JSON.parse(raw);
         await this.i18n.load(saved || locale);
         this.i18n.applyDom();
+        await this.refreshSttEnabled();
         await this.updateUI();
     }
 
@@ -268,6 +272,7 @@ export class LiraApp {
                     <div class="action-buttons">
                         <button id="sendBtn" onclick="liraApp.handleSend()">➤</button>
                         <div class="additional-actions">
+                            <button id="stt-btn" type="button" class="stt-btn hidden" title="${this.t('Voice input')}" onclick="liraApp.handleSttClick()">🎤</button>
                             <button id="saveBtn" type="button" title="${this.t('Save to dataset')}" onclick="liraApp.handleSave()">+</button>
                             <button id="memoryVerifiedBtn" type="button" title="${this.t('Save to memory')}" onclick="liraApp.handleMarkMemory()">🧠</button>
                             <button id="attach-btn" type="button" title="${this.t('Photo')}" onclick="document.getElementById('file-input').click()">📎</button>
@@ -300,6 +305,7 @@ export class LiraApp {
         }
 
         this.bindUserInputActivity(document.getElementById('userInput'));
+        this.syncSttButton();
         this.initEvents();
         this.syncGalleryToolsPanel();
     }
@@ -1022,6 +1028,83 @@ export class LiraApp {
             if (this.backend) this.backend.clearImageEditSecondarySlot();
         }
         this.renderMultiImagePreview();
+    }
+
+    async refreshSttEnabled() {
+        if (!this.backend?.get_ui_locale) {
+            this.state.sttEnabled = false;
+            return;
+        }
+        try {
+            const raw = await this.backend.get_ui_locale();
+            const { stt_enabled: sttEnabled } = JSON.parse(raw);
+            this.state.sttEnabled = !!sttEnabled;
+        } catch (_e) {
+            this.state.sttEnabled = false;
+        }
+    }
+
+    syncSttButton() {
+        const btn = document.getElementById('stt-btn');
+        if (!btn) return;
+        const show = !this.state.isImageGenerator && this.state.sttEnabled;
+        btn.classList.toggle('hidden', !show);
+        if (!show) {
+            this.state.sttRecording = false;
+        }
+        btn.textContent = this.state.sttRecording ? '⏹' : '🎤';
+        btn.classList.toggle('stt-btn--recording', this.state.sttRecording);
+        btn.title = this.state.sttRecording
+            ? this.t('Stop recording')
+            : this.t('Voice input');
+    }
+
+    async handleSttClick() {
+        if (!this.backend?.startSttRecording || !this.state.sttEnabled || this.state.isImageGenerator) {
+            return;
+        }
+        if (!this.state.sttRecording) {
+            const ok = await this.backend.startSttRecording();
+            if (ok) {
+                this.state.sttRecording = true;
+                this.syncSttButton();
+            } else {
+                alert(this.t('Speech recognition is unavailable.'));
+            }
+            return;
+        }
+        this.state.sttRecording = false;
+        this.syncSttButton();
+        this.showThinkingIndicator(this.t('Recognizing speech…'));
+        this.backend.stopSttRecording();
+    }
+
+    onSttEvent(payload) {
+        if (!payload || typeof payload !== 'object') return;
+        if (payload.type === 'state') {
+            this.state.sttRecording = !!payload.recording;
+            this.syncSttButton();
+            return;
+        }
+        if (payload.type === 'transcribing') {
+            this.showThinkingIndicator(this.t('Recognizing speech…'));
+            return;
+        }
+        if (payload.type === 'done') {
+            this.hideThinkingIndicator();
+            this.state.sttRecording = false;
+            this.syncSttButton();
+            if (!payload.ok) {
+                const err = payload.error || '';
+                if (err === 'empty') {
+                    alert(this.t('Could not recognize speech.'));
+                } else if (err === 'stt_model_missing') {
+                    alert(this.t('Speech recognition is unavailable.'));
+                } else if (err) {
+                    alert(`${this.t('Speech recognition failed.')}\n${err}`);
+                }
+            }
+        }
     }
 
     handleSend() {
