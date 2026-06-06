@@ -406,6 +406,15 @@ body {
     background: #c0392b;
 }
 
+#stt-btn.stt-btn--pending {
+    opacity: 0.45;
+    cursor: wait;
+}
+
+#stt-btn:disabled {
+    cursor: wait;
+}
+
 .hidden {
     display: none !important;
 }

@@ -30,6 +30,8 @@ export class LiraApp {
         this.i18n = new I18n();
         this.state.sttRecording = false;
         this.state.sttEnabled = false;
+        this.state.uiLocale = 'ru';
+        this._sttRefreshTimer = null;
         this.view.hideBlockingLoader();
         this.initBridge();
 
@@ -74,9 +76,11 @@ export class LiraApp {
         }
         const raw = await this.backend.get_ui_locale();
         const { locale, stt_enabled: sttEnabled } = JSON.parse(raw);
-        await this.i18n.load(locale || 'ru');
+        this.state.uiLocale = locale || 'ru';
+        await this.i18n.load(this.state.uiLocale);
         this.state.sttEnabled = !!sttEnabled;
         this.i18n.applyDom();
+        this.scheduleSttRefresh();
     }
 
     async onLocaleChange(locale) {
@@ -85,8 +89,10 @@ export class LiraApp {
         const raw = await this.backend.set_ui_locale(locale);
         const { locale: saved } = JSON.parse(raw);
         await this.i18n.load(saved || locale);
+        this.state.uiLocale = saved || locale;
         this.i18n.applyDom();
         await this.refreshSttEnabled();
+        this.scheduleSttRefresh();
         await this.updateUI();
     }
 
@@ -1030,6 +1036,24 @@ export class LiraApp {
         this.renderMultiImagePreview();
     }
 
+    scheduleSttRefresh() {
+        if (this._sttRefreshTimer) {
+            clearInterval(this._sttRefreshTimer);
+            this._sttRefreshTimer = null;
+        }
+        if (this.state.isImageGenerator || this.state.uiLocale !== 'ru' || this.state.sttEnabled) {
+            return;
+        }
+        this._sttRefreshTimer = setInterval(async () => {
+            await this.refreshSttEnabled();
+            this.syncSttButton();
+            if (this.state.sttEnabled && this._sttRefreshTimer) {
+                clearInterval(this._sttRefreshTimer);
+                this._sttRefreshTimer = null;
+            }
+        }, 3000);
+    }
+
     async refreshSttEnabled() {
         if (!this.backend?.get_ui_locale) {
             this.state.sttEnabled = false;
@@ -1042,16 +1066,20 @@ export class LiraApp {
         } catch (_e) {
             this.state.sttEnabled = false;
         }
+        this.scheduleSttRefresh();
     }
 
     syncSttButton() {
         const btn = document.getElementById('stt-btn');
         if (!btn) return;
-        const show = !this.state.isImageGenerator && this.state.sttEnabled;
+        const ruLocale = this.state.uiLocale === 'ru';
+        const show = !this.state.isImageGenerator && ruLocale;
         btn.classList.toggle('hidden', !show);
         if (!show) {
             this.state.sttRecording = false;
         }
+        btn.disabled = show && !this.state.sttEnabled;
+        btn.classList.toggle('stt-btn--pending', show && !this.state.sttEnabled);
         btn.textContent = this.state.sttRecording ? '⏹' : '🎤';
         btn.classList.toggle('stt-btn--recording', this.state.sttRecording);
         btn.title = this.state.sttRecording
@@ -1060,8 +1088,16 @@ export class LiraApp {
     }
 
     async handleSttClick() {
-        if (!this.backend?.startSttRecording || !this.state.sttEnabled || this.state.isImageGenerator) {
+        if (!this.backend?.startSttRecording || this.state.uiLocale !== 'ru' || this.state.isImageGenerator) {
             return;
+        }
+        if (!this.state.sttEnabled) {
+            await this.refreshSttEnabled();
+            this.syncSttButton();
+            if (!this.state.sttEnabled) {
+                alert(this.t('Speech recognition is setting up. Please wait…'));
+                return;
+            }
         }
         if (!this.state.sttRecording) {
             const ok = await this.backend.startSttRecording();

@@ -51,6 +51,7 @@ Voice input,Голосовой ввод
 Stop recording,Остановить запись
 Recognizing speech…,Распознаём речь…
 Speech recognition is unavailable.,Распознавание речи недоступно.
+Speech recognition is setting up. Please wait…,Распознавание речи настраивается. Подождите…
 Could not recognize speech.,Не удалось распознать речь.
 Speech recognition failed.,Ошибка распознавания речи.
 Task unavailable,Задача недоступна

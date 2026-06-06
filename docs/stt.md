@@ -54,7 +54,7 @@ test -f data/models/gigaam-v3-e2e-rnnt/v3_e2e_rnnt_encoder.onnx \
 - Типичная задержка на CPU: порядка **1–2 с** на короткую фразу (зависит от CPU и длины аудио).
 - Запись и воспроизведение TTS используют **sounddevice** (уже в `requirements.txt`).
 
-Пакеты `onnx-asr` и `huggingface_hub` ставятся bootstrap’ом при первом ru-старте, в базовый `install-deps.sh` не входят.
+Пакеты `onnx-asr`, **`onnxruntime`** и `huggingface_hub` ставятся bootstrap’ом при первом ru-старте, в базовый `install-deps.sh` не входят.
 
 ## Код (для разработчиков)
 

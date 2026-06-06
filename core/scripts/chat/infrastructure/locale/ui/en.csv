@@ -51,6 +51,7 @@ Voice input,Voice input
 Stop recording,Stop recording
 Recognizing speech…,Recognizing speech…
 Speech recognition is unavailable.,Speech recognition is unavailable.
+Speech recognition is setting up. Please wait…,Speech recognition is setting up. Please wait…
 Could not recognize speech.,Could not recognize speech.
 Speech recognition failed.,Speech recognition failed.
 Task unavailable,Task unavailable
