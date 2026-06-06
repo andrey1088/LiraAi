@@ -54,4 +54,4 @@ test -f data/models/v5_5_ru.pt && echo "TTS ru: OK" || echo "TTS ru: нет фа
 | Ошибка при смене языка UI | Для `en` нужен отдельный файл (`v3_en.pt` по умолчанию) |
 | Звук есть, но тихо | Ползунок громкости в UI / `settings.volume` активной модели |
 
-См. также [getting-started.md](getting-started.md), [configuration.md](configuration.md).
+См. также [getting-started.md](getting-started.md), [configuration.md](configuration.md), [stt.md](stt.md) (голосовой ввод).

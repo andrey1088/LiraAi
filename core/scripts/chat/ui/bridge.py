@@ -16,6 +16,11 @@ class LiraBridge(QObject):
         super().__init__()
         self.window = window
         self.web_ready = False
+        stt = window.stt_controller
+        stt.state_changed.connect(self._stt_state_changed)
+        stt.transcribe_started.connect(self._stt_transcribe_started)
+        stt.transcribe_finished.connect(self._stt_transcribe_finished)
+        stt.transcribe_failed.connect(self._stt_transcribe_failed)
 
     @staticmethod
     def _model_supports_gallery_describe(m_info) -> bool:
@@ -106,9 +111,51 @@ class LiraBridge(QObject):
             }
         )
 
+    def _run_chat_js(self, script: str) -> None:
+        self.window.browser.page().runJavaScript(script)
+
+    def _emit_stt_event(self, payload: dict) -> None:
+        body = json.dumps(payload, ensure_ascii=False)
+        self._run_chat_js(f"if(window.liraApp) window.liraApp.onSttEvent({body});")
+
+    @pyqtSlot(bool)
+    def _stt_state_changed(self, recording: bool) -> None:
+        self._emit_stt_event({"type": "state", "recording": bool(recording)})
+
+    @pyqtSlot()
+    def _stt_transcribe_started(self) -> None:
+        self._emit_stt_event({"type": "transcribing"})
+
+    @pyqtSlot(str)
+    def _stt_transcribe_finished(self, text: str) -> None:
+        self._emit_stt_event({"type": "done", "ok": True})
+        if (text or "").strip():
+            self.sendMessage(text.strip())
+
+    @pyqtSlot(str)
+    def _stt_transcribe_failed(self, reason: str) -> None:
+        self._emit_stt_event({"type": "done", "ok": False, "error": reason or "unknown"})
+
+    @pyqtSlot(result=bool)
+    def is_stt_enabled(self) -> bool:
+        return self.window.stt_controller.is_enabled_for_ui()
+
+    @pyqtSlot(result=bool)
+    def startSttRecording(self) -> bool:
+        return self.window.stt_controller.start_recording()
+
+    @pyqtSlot()
+    def stopSttRecording(self) -> None:
+        self.window.stt_controller.stop_recording_and_transcribe()
+
     @pyqtSlot(result=str)
     def get_ui_locale(self):
-        return json.dumps({"locale": self.window.config_repo.get_ui_locale()})
+        return json.dumps(
+            {
+                "locale": self.window.config_repo.get_ui_locale(),
+                "stt_enabled": self.window.stt_controller.is_enabled_for_ui(),
+            }
+        )
 
     @pyqtSlot(str, result=str)
     def set_ui_locale(self, locale: str):
@@ -123,6 +170,8 @@ class LiraBridge(QObject):
                 cc.rebuild_tools_for_locale(loc)
         else:
             loc = repo.save_ui_locale(locale)
+        self.window.stt_controller.cancel_recording()
+        self.window.start_stt_bootstrap_if_needed()
         return json.dumps({"ok": True, "locale": loc, "tts": repo.get_tts_block()})
 
     @pyqtSlot(result=str)

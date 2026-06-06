@@ -1,6 +1,6 @@
 # Lira
 
-> **English (brief).** Local PyQt6 assistant: llama.cpp chat, vision, tools, memory, optional TTS and image generation/editing. **All documentation is in Russian** — start with [docs/getting-started.md](docs/getting-started.md) if you read Cyrillic; otherwise use this README and `config.example.json` as a map. **Linux** (Ubuntu 24.04 tested), **Python 3.12+**, **NVIDIA + CUDA** recommended. Model weights are **not** included. Hobby project, no support guarantee; issues and PRs welcome.
+> **English (brief).** Local PyQt6 assistant: llama.cpp chat, vision, tools, memory, optional TTS and **Russian push-to-talk STT (GigaAM)**, image generation/editing. **All documentation is in Russian** — start with [docs/getting-started.md](docs/getting-started.md) if you read Cyrillic; otherwise use this README and `config.example.json` as a map. **Linux** (Ubuntu 24.04 tested), **Python 3.12+**, **NVIDIA + CUDA** recommended. Model weights are **not** included (STT weights auto-download on first ru launch). Hobby project, no support guarantee; issues and PRs welcome.
 
 ---
 
@@ -35,17 +35,18 @@
 - **Sens** — время, дата и состояние системы (GPU/CPU) отдельным блоком `sens` в Jinja-шаблоне, без лишних tool-вызовов. → [sens.md](docs/sens.md), [chat-templates.md](docs/chat-templates.md)
 - **Limbic** — эмоциональное состояние модели по контексту (rubert-tiny2), плавный возврат к baseline; PNG-аватар по эмоциям в UI. → [limbic.md](docs/limbic.md)
 - **TTS** — озвучка Silero (ru/en по `ui_locale`). → [tts.md](docs/tts.md)
+- **STT** — голосовой ввод GigaAM (только `ui_locale: ru`, push-to-talk 🎤; веса качаются при первом запуске). → [stt.md](docs/stt.md)
 - **Локализация** — `ui_locale` ru/en, CSV для UI и tool-подсказок. → [i18n-ui.md](docs/i18n-ui.md)
 
 Шаблон конфига на **три слота** (чат / SD / image-edit): [config.example.json](config.example.json).
 
 ## Ограничения
 
-- **Веса сами:** GGUF, mmproj, SD-checkpoint, Silero `.pt`, embedder — в `data/models/` (десятки ГБ, не в git).
+- **Веса сами:** GGUF, mmproj, SD-checkpoint, Silero `.pt`, embedder — в `data/models/` (десятки ГБ, не в git). STT (GigaAM ONNX, ~850 MB) скачивается автоматически при `ui_locale: ru`.
 - **Железо:** полноценный multimodal-чат рассчитан на дискретную NVIDIA; на CPU возможно, но медленно.
 - **Vision:** для части семейств (например Gemma) multimodal-стек llama.cpp может отставать от текстового режима — см. [docs/models.md](docs/models.md).
 - **ОС:** Linux; Windows/macOS не в фокусе.
-- **Голосовой ввод, видеогенерация** — не реализованы.
+- **Голосовой ввод** — только русская локаль UI (GigaAM); **видеогенерация** — не реализована.
 - **Hobby-проект:** без гарантии поддержки; [MIT](LICENSE), issues и PR — см. [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Быстрый старт
@@ -99,6 +100,8 @@ cp .env.example .env   # по желанию: Telegram, SearXNG, HTTP_PROXY
 | Оглавление | [docs/README.md](docs/README.md) |
 | Установка | [docs/getting-started.md](docs/getting-started.md) |
 | Конфигурация | [docs/configuration.md](docs/configuration.md) |
+| Озвучка (TTS) | [docs/tts.md](docs/tts.md) |
+| Распознавание речи (STT) | [docs/stt.md](docs/stt.md) |
 | Модели и слоты | [docs/models.md](docs/models.md) |
 | Проверенные модели | [docs/models-verified.md](docs/models-verified.md) |
 | Генерация картинок | [docs/image-generation.md](docs/image-generation.md) |
@@ -118,3 +121,4 @@ cp .env.example .env   # по желанию: Telegram, SearXNG, HTTP_PROXY
 | Поиск по галерее | [multilingual-e5-small](https://huggingface.co/intfloat/multilingual-e5-small) |
 | Эмоции (limbic) | [rubert-tiny2-russian-emotion-detection](https://huggingface.co/Aniemore/rubert-tiny2-russian-emotion-detection) |
 | TTS | [Silero v5 ru](https://github.com/snakers4/silero-models) |
+| STT (ru UI) | [GigaAM v3 ONNX](https://huggingface.co/istupakov/gigaam-v3-onnx) — auto-download |

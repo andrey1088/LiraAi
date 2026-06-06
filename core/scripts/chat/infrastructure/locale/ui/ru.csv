@@ -47,6 +47,12 @@ Save to dataset,Сохранить в датасет
 Save to memory,Сохранить в память
 "Photo (JPG, PNG, WebP) or document (TXT, MD, PDF)","Фото (JPG, PNG, WebP) или документ (TXT, MD, PDF)"
 Take a photo with the camera,Снять фото с камеры
+Voice input,Голосовой ввод
+Stop recording,Остановить запись
+Recognizing speech…,Распознаём речь…
+Speech recognition is unavailable.,Распознавание речи недоступно.
+Could not recognize speech.,Не удалось распознать речь.
+Speech recognition failed.,Ошибка распознавания речи.
 Task unavailable,Задача недоступна
 Failed to start,Не удалось запустить
 Start error,Ошибка запуска

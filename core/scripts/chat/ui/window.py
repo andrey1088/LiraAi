@@ -6,6 +6,7 @@ from pathlib import Path
 from app.chat_controller import ChatController
 from app.model_controller import ModelController
 from app.session_controller import SessionController
+from app.stt_controller import SttController
 from app.voice_controller import VoiceController
 from maintenance import sleep_mode
 from PyQt6.QtCore import Qt, QTimer, QUrl
@@ -47,9 +48,11 @@ class LiraWindow(QMainWindow):
         self.model_controller = ModelController(self)
         self.session_controller = SessionController(self)
         self.voice_controller = VoiceController(self)
+        self.stt_controller = SttController(self)
         self.chat_controller = ChatController(self)
         self.activity_gate = UserActivityGate()
         self._web_service_warmup_started = False
+        self._stt_bootstrap_running = False
         self._shutdown_in_progress = False
         self._shutdown_complete = False
 
@@ -151,8 +154,39 @@ class LiraWindow(QMainWindow):
     def delayed_init(self):
         self.chat_controller.semantic_engine.warmup()
         sleep_mode(self.config_repo, self.chat_controller.semantic_engine)
+        self.start_stt_bootstrap_if_needed()
         # Then start model load
         self.init_model_brain()
+
+    def start_stt_bootstrap_if_needed(self) -> None:
+        from infrastructure.stt.bootstrap import stt_bootstrap_needed
+
+        m_info = self.config_repo.get_active_model_info()
+        if self._stt_bootstrap_running or not stt_bootstrap_needed(
+            self.config_repo.get_ui_locale(),
+            model_class=m_info.model_class,
+        ):
+            return
+        self._stt_bootstrap_running = True
+        threading.Thread(
+            target=self._bootstrap_stt_background,
+            name="stt-bootstrap",
+            daemon=True,
+        ).start()
+
+    def _bootstrap_stt_background(self) -> None:
+        try:
+            from infrastructure.stt.bootstrap import ensure_stt_ready
+
+            if ensure_stt_ready():
+                QTimer.singleShot(0, self._notify_stt_ui_ready)
+        finally:
+            self._stt_bootstrap_running = False
+
+    def _notify_stt_ui_ready(self) -> None:
+        self.browser.page().runJavaScript(
+            "if(window.liraApp) liraApp.refreshSttEnabled().then(() => liraApp.syncSttButton());"
+        )
 
     def init_model_brain(self):
         self.model_controller.init_model_brain()
@@ -471,6 +505,7 @@ class LiraWindow(QMainWindow):
             self._update_shutdown_loader(tr("Stopping speech…", loc))
             self._pump_ui()
             self.voice_controller.stop_all_audio("app_close")
+            self.stt_controller.shutdown()
 
             self._update_shutdown_loader(tr("Stopping services…", loc))
             self._pump_ui()

@@ -10,6 +10,7 @@
 |----------|--------|
 | [getting-started.md](getting-started.md) | Установка, первый запуск, `setup.sh` |
 | [tts.md](tts.md) | Озвучка Silero (опционально, без auto-download) |
+| [stt.md](stt.md) | Голосовой ввод GigaAM (ru, auto-download весов при старте) |
 | [image-generation.md](image-generation.md) | Художница / SD, сборка с CUDA |
 | [configuration.md](configuration.md) | `config.json`, слоты, `user`, gallery |
 | [personas.md](personas.md) | Персоны, промпты, `{model_name}`, `{user_name}` |

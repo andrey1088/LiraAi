@@ -8,7 +8,7 @@
 |------|------------|
 | `active_model_id` | id слота модели в UI |
 | `active_model` | отображаемое имя (legacy) |
-| `ui_locale` | Язык UI и промптов persona: `ru` \| `en` (сохраняется при смене в сайдбаре) |
+| `ui_locale` | Язык UI и промптов persona: `ru` \| `en` (сохраняется при смене в сайдбаре). При `ru` доступен голосовой ввод (GigaAM STT) — см. [stt.md](stt.md) |
 | `tts` | Активный Silero: `locale`, `model_path`, `speaker`, `sample_rate`, `en_speaker` |
 | `active_model` | Имя слота (синхронизируется с `active_model_id` при переключении модели) |
 

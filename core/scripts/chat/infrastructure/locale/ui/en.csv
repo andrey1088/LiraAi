@@ -47,6 +47,12 @@ Save to dataset,Save to dataset
 Save to memory,Save to memory
 "Photo (JPG, PNG, WebP) or document (TXT, MD, PDF)","Photo (JPG, PNG, WebP) or document (TXT, MD, PDF)"
 Take a photo with the camera,Take a photo with the camera
+Voice input,Voice input
+Stop recording,Stop recording
+Recognizing speech…,Recognizing speech…
+Speech recognition is unavailable.,Speech recognition is unavailable.
+Could not recognize speech.,Could not recognize speech.
+Speech recognition failed.,Speech recognition failed.
 Task unavailable,Task unavailable
 Failed to start,Failed to start
 Start error,Start error

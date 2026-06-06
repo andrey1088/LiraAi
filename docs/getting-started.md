@@ -1,6 +1,6 @@
 # Первый запуск
 
-Локальный GUI-ассистент Lira: **llama.cpp** (текст + vision), tools, память, опционально TTS и генерация картинок.
+Локальный GUI-ассистент Lira: **llama.cpp** (текст + vision), tools, память, опционально TTS, **STT (ru)** и генерация картинок.
 
 ## Требования
 
@@ -12,6 +12,7 @@
 | Диск | Место под GGUF в `data/models/` (десятки ГБ — не в git) |
 | Нативный стек | **llama.cpp** (CUDA), **llama-cpp-python** — см. [models-verified.md](models-verified.md) |
 | TTS (опционально) | Silero — вручную, см. [tts.md](tts.md) |
+| STT (опционально) | GigaAM — только `ui_locale: ru`, веса качаются при старте, см. [stt.md](stt.md) |
 | Веб-поиск (опционально) | Docker + `infra/docker-compose.services.yml` (SearXNG) |
 
 ## Установка (репозиторий уже клонирован)
@@ -113,7 +114,7 @@ gio launch ~/.local/share/applications/lira.desktop
 | `config.json` | Слоты моделей, `user`, gallery, TTS |
 | `data/personas/` | Персоны и промпты |
 | `data/memory/*.db` | История и память |
-| `data/models/*` | GGUF, mmproj, embedder, Silero `.pt` |
+| `data/models/*` | GGUF, mmproj, embedder, Silero `.pt`, GigaAM ONNX (STT) |
 | `.env` | Telegram, SearXNG (см. `.env.example`) |
 
 Шаблон конфига: [config.example.json](../config.example.json). Документация полей: [configuration.md](configuration.md).
@@ -128,7 +129,7 @@ gio launch ~/.local/share/applications/lira.desktop
 2. **Конфиг** — `./scripts/setup.sh` записал `user.display_name`; в `config.json` есть слот с существующими путями к GGUF.
 3. **Запуск** — `./scripts/lira_start.sh` открывает окно; ответ в чате на модели из [основного списка](models-verified.md).
 4. **Vision** — картинка из файла или 📎 в галерее: превью над полем ввода, модель видит вложение.
-5. **Опционально** — `data/models/paraphrase-multilingual-MiniLM-L12-v2/` для semantic / `memory_search`; `.env` + Docker + SearXNG для `web_search`; Silero `v5_5_ru.pt` для TTS (без `.pt` приложение тоже стартует).
+5. **Опционально** — `data/models/paraphrase-multilingual-MiniLM-L12-v2/` для semantic / `memory_search`; `.env` + Docker + SearXNG для `web_search`; Silero `v5_5_ru.pt` для TTS (без `.pt` приложение тоже стартует); при `ui_locale: ru` — голосовой ввод (GigaAM, см. [stt.md](stt.md)).
 
 ## Художница (stable-diffusion.cpp)
 
@@ -137,6 +138,10 @@ gio launch ~/.local/share/applications/lira.desktop
 ## Озвучка (Silero)
 
 Не обязательна: без файла `.pt` Lira **запускается без озвучки**. Веса не качаются при `install-deps` — только вручную, см. [tts.md](tts.md) и [snakers4/silero-models](https://github.com/snakers4/silero-models).
+
+## Распознавание речи (GigaAM)
+
+Только при **`ui_locale: ru`** и чат-слоте. Веса (~850 MB) и пакеты `onnx-asr` / `huggingface_hub` подтягиваются **в фоне при первом запуске**; без интернета можно положить ONNX в `data/models/gigaam-v3-e2e-rnnt/` вручную. Подробнее: [stt.md](stt.md).
 
 ## Устранение неполадок
 
